@@ -1,6 +1,6 @@
 # LintTrap
 
-TODO: Write a gem description
+Parses the output of various linters. Designed for usage with [permpress](https://github.com/lintci/permpress) on [LintCI](http://www.lintci.com).
 
 ## Installation
 
@@ -20,7 +20,20 @@ Or install it yourself as:
 
 ## Usage
 
-TODO: Write usage instructions here
+``` ruby
+require 'lint_trap'
+require 'stringio'
+
+# This would typically be a stdout for another process
+io = StringIO.new("bad.rb:2:7:4:Style/MethodName:convention:Use snake_case for methods.\n")
+
+LintTrap.parse('rubocop', io) do |violation|
+  puts violation.inspect
+end
+
+# Output
+# {:file=>"bad.rb", :line=>"2", :column=>"7", :length=>"4", :rule=>"Style/MethodName", :severity=>"convention", :message=>"Use snake_case for methods."}
+```
 
 ## Contributing
 

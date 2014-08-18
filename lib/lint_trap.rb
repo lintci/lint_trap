@@ -5,8 +5,8 @@ require 'lint_trap/parser_factory'
 module LintTrap
   class << self
     def parse(linter, io, parser_name = nil)
-      parser = ParserFactory.parser(parser_name)
-      parser ||= ParserFactory.parser(linter)
+      parser = ParserFactory.parser_for(parser_name)
+      parser = ParserFactory.parser_for(linter) if parser_name.nil?
 
       parser.parse(io, &Proc.new)
     end

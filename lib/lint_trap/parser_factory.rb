@@ -8,7 +8,7 @@ module LintTrap
   module ParserFactory
     class << self
       def register(linter, parser)
-        @parsers ||= Hash.new{Parsers::NullParser}
+        @parsers ||= Hash.new{|h, k| h[k] = Parsers::NullParser}
         @parsers[linter] = parser
       end
 
