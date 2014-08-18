@@ -1,4 +1,5 @@
 require 'lint_trap/version'
+require 'lint_trap/parser_factory'
 
 # Parses linter output from IO
 module LintTrap

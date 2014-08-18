@@ -12,7 +12,7 @@ module LintTrap
       end
 
       def parse
-        raise NotImplementedError, "Subclass #{self.class.name} must implement parse.'
+        raise NotImplementedError, "Subclass #{self.class.name} must implement parse."
       end
     end
   end

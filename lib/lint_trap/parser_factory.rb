@@ -1,5 +1,7 @@
 require_relative 'parsers/null_parser'
 require_relative 'parsers/standard_parser'
+require_relative 'parsers/vim_quickfix_parser'
+require_relative 'parsers/csslint_parser'
 
 module LintTrap
   # Determines the appropriate parser for the given linter
@@ -16,12 +18,12 @@ module LintTrap
     end
 
     register 'standard', Parsers::StandardParser
-    register 'vim_quickfix', Parser::VimQuickfixParser
+    register 'vim_quickfix', Parsers::VimQuickfixParser
 
     register 'checkstyle', Parsers::StandardParser
     register 'coffeelint', Parsers::StandardParser
-    #register 'csslint', Parsers::CSSLintParser
-    #register 'golint', Parser::VimQuickfixParser
+    register 'csslint', Parsers::CSSLintParser
+    register 'golint', Parsers::VimQuickfixParser
     register 'jshint', Parsers::StandardParser
     register 'jsonlint', Parsers::StandardParser
     register 'rubocop', Parsers::StandardParser

@@ -3,7 +3,7 @@ require_relative 'line_parser'
 module LintTrap
   module Parsers
     # Handles parsing LintCI standard format
-    class StandardParser < LineParser
+    class VimQuickfixParser < LineParser
 
     private
 
@@ -11,10 +11,7 @@ module LintTrap
         /
           (?<file>[^:]+):
           (?<line>[^:]*):
-          (?<column>[^:]*):
-          (?<length>[^:]*):
-          (?<rule>[^:]*):
-          (?<severity>[^:]*):
+          (?<column>[^:]*):\s*
           (?<message>.+)
         /x
       end
