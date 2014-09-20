@@ -2,6 +2,7 @@ require_relative 'parsers/null_parser'
 require_relative 'parsers/standard_parser'
 require_relative 'parsers/vim_quickfix_parser'
 require_relative 'parsers/csslint_parser'
+require_relative 'parsers/pylint_parser'
 
 module LintTrap
   # Determines the appropriate parser for the given linter
@@ -28,5 +29,8 @@ module LintTrap
     register 'jsonlint', Parsers::StandardParser
     register 'rubocop', Parsers::StandardParser
     register 'scsslint', Parsers::StandardParser
+    register 'pylint', Parsers::PyLintParser
+    register 'cppcheck', Parsers::StandardParser
+
   end
 end

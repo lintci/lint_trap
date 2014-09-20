@@ -8,7 +8,8 @@ describe LintTrap::Parsers::StandardParser do
     "bad.js:2:13::W030:warning:Expected an assignment or function call and instead saw an expression.\n"\
     "bad.json:2:2:::error:Json strings must use double quotes\n"\
     "bad.rb:2:7:4:Style/MethodName:convention:Use snake_case for methods.\n"\
-    "bad.scss:2:3:12:BorderZero:warning:`border: 0;` is preferred over `border: none;`\n"
+    "bad.scss:2:3:12:BorderZero:warning:`border: 0;` is preferred over `border: none;`\n"\
+    "bad.cpp:11:::unusedFunction:style:The function 'get42' is never used.\n"
   end
   let(:io){StringIO.new(parser_output)}
   subject(:parser){described_class}
@@ -69,6 +70,15 @@ describe LintTrap::Parsers::StandardParser do
           rule: 'BorderZero',
           severity: 'warning',
           message: '`border: 0;` is preferred over `border: none;`'
+        },
+        {
+          file: 'bad.cpp',
+          line: '11',
+          column: nil,
+          length: nil,
+          rule: 'unusedFunction',
+          severity: 'style',
+          message: "The function 'get42' is never used."
         }
       )
     end
