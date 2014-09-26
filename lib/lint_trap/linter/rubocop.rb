@@ -17,10 +17,6 @@ module LintTrap
           flags.concat(['--config', options[:config]]) if options[:config]
         end
       end
-
-      def parser(stdout)
-        LintTrap::Parser::Standard.new(stdout)
-      end
     end
   end
 end

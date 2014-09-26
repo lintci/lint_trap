@@ -23,13 +23,14 @@ describe LintTrap::Command do
     end
 
     context 'with docker container' do
-      let(:container){LintTrap::Container::Docker.new('lint/runner', '/local/code')}
+      let(:file){fixture_path('lint.txt')}
+      let(:container){LintTrap::Container::Docker.new('lint/runner', fixture_path)}
 
       it 'generates a wrapped executable command' do
         expect(command.to_s(container)).to eq(
           "docker run --privileged=false -v #{LintTrap::Container::Base::LOCAL_CONFIG_PATH}:/opt/lint_trap/config "\
-          '-v /local/code:/home/code --workdir=/home/code --user=linter lint/runner '\
-          'cat -b fake\ file.txt 2>&1'
+          "-v #{fixture_path}:/home/code --workdir=/home/code lint/runner "\
+          'cat -b /home/code/lint.txt 2>&1'
         )
       end
     end

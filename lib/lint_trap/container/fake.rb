@@ -13,7 +13,15 @@ module LintTrap
       end
 
       def config_path(path)
-        File.join(LOCAL_CONFIG_PATH, path)
+        LOCAL_CONFIG_PATH.join(path).to_s
+      end
+
+      def container_path(path)
+        path
+      end
+
+      def local_path(path)
+        path
       end
     end
   end

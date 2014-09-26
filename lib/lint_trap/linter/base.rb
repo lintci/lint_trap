@@ -31,7 +31,7 @@ module LintTrap
       end
 
       def parser(stdout)
-        LintTrap::Parser::Standard.new(stdout)
+        LintTrap::Parser::Standard.new(stdout, container)
       end
 
       def config_path(path)

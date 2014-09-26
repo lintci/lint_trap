@@ -5,11 +5,12 @@ describe LintTrap::Parser::VimQuickfix do
     "bad.go:5:1: exported function Main should have comment or be unexported\n"
   end
   let(:io){StringIO.new(parser_output)}
-  subject(:parser){described_class}
+  let(:container){LintTrap::Container::Fake.new}
+  subject(:parser){described_class.new(io, container)}
 
-  describe '.parse' do
+  describe '#parse' do
     it 'parses violations from io' do
-      expect{|b| parser.parse(io, &b)}.to yield_successive_args(
+      expect{|b| parser.parse(&b)}.to yield_successive_args(
         {
           file: 'bad.go',
           line: '5',

@@ -9,8 +9,8 @@ module LintTrap
       def violation_regex
         /
           (?<file>[^:]+):
-          (?<line>[^:]*):
-          (?<column>[^:]*):\s*
+          (?<line>\d*):
+          (?<column>\d*):\s*
           (?<message>.+)
         /x
       end

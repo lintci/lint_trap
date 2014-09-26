@@ -12,7 +12,7 @@ module LintTrap
       end
 
       def parser(stdout)
-        LintTrap::Parser::VimQuickfix.new(stdout)
+        LintTrap::Parser::VimQuickfix.new(stdout, container)
       end
     end
   end

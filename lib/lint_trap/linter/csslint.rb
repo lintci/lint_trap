@@ -16,7 +16,7 @@ module LintTrap
       end
 
       def parser(stdout)
-        LintTrap::Parser::CSSLint.new(stdout)
+        LintTrap::Parser::CSSLint.new(stdout, container)
       end
     end
   end

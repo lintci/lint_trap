@@ -1,19 +1,18 @@
 module LintTrap
   module Parser
     class Base
-      class << self
-        def parse(io)
-          new(io).parse(&Proc.new)
-        end
-      end
-
-      def initialize(io)
+      def initialize(io, container)
         @io = io
+        @container = container
       end
 
       def parse
         raise NotImplementedError, "Subclass #{self.class.name} must implement parse."
       end
+
+    protected
+
+      attr_reader :container, :io
     end
   end
 end
