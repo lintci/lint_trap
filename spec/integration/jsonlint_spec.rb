@@ -49,7 +49,7 @@ describe LintTrap::Linter::JSONLint do
   end
 
   context 'with docker container', if: !ENV['CI'] do
-    let(:container){LintTrap::Container::Docker.new('lintci/spin_cycle', fixture_path)}
+    let(:container){LintTrap::Container::Docker.new('lintci/spin_cycle:latest', fixture_path)}
 
     it_behaves_like '#lint'
   end

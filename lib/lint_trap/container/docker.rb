@@ -6,7 +6,7 @@ module LintTrap
     # Acts like a container, without actually requiring a container.
     class Docker < Base
       CONFIG_PATH = Pathname.new('/opt/lint_trap/config')
-      CODE_PATH = Pathname.new('/home/code')
+      CODE_PATH = Pathname.new('/home/spin_cycle')
 
       def wrap(command)
         "docker run #{flags} #{image} #{command}"
@@ -37,8 +37,8 @@ module LintTrap
           '--privileged=false',
           '-v', "#{LOCAL_CONFIG_PATH}:#{CONFIG_PATH}",
           '-v', "#{repo_path}:#{CODE_PATH}",
-          "--workdir=#{CODE_PATH}"#,
-          #'--user=linter'
+          "--workdir=#{CODE_PATH}",
+          '--user=spin_cycle'
         ].join(' ')
       end
     end

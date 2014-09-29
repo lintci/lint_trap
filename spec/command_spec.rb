@@ -29,8 +29,8 @@ describe LintTrap::Command do
       it 'generates a wrapped executable command' do
         expect(command.to_s(container)).to eq(
           "docker run --privileged=false -v #{LintTrap::Container::Base::LOCAL_CONFIG_PATH}:/opt/lint_trap/config "\
-          "-v #{fixture_path}:/home/code --workdir=/home/code lint/runner "\
-          'cat -b /home/code/lint.txt 2>&1'
+          "-v #{fixture_path}:/home/spin_cycle --workdir=/home/spin_cycle --user=spin_cycle lint/runner "\
+          'cat -b /home/spin_cycle/lint.txt 2>&1'
         )
       end
     end
