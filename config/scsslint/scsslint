@@ -31,7 +31,4 @@ module SCSSLint
   end
 end
 
-SCSSLint::CLI.new(ARGV).tap do |cli|
-  cli.parse_arguments
-  cli.run
-end
+exit SCSSLint::CLI.new.run(ARGV)
