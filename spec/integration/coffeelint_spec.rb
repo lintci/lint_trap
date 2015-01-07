@@ -38,7 +38,7 @@ describe LintTrap::Linter::CoffeeLint do
     it_behaves_like '#lint'
   end
 
-  context 'without a docker container', if: ENV['SKIP_DOCKER'], if ENV['SKIP_DOCKER'] do
+  context 'without a docker container', if: ENV['SKIP_DOCKER'] do
     it_behaves_like '#lint'
   end
 end

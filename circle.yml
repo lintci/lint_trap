@@ -8,4 +8,4 @@ dependencies:
     - gem install rubocop -v0.26.1
     - gem install scss-lint -v0.28.0
     - sudo apt-get install cppcheck
-    - sudo pip install -U pylint
+    - pip install -U pylint
