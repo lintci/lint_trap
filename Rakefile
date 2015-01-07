@@ -5,3 +5,34 @@ RSpec::Core::RakeTask.new(:spec)
 
 task :default => :spec
 
+namespace :docker do
+  DockerError = Class.new(StandardError)
+
+  def fail_on_error
+    return if $? == 0
+
+    raise DockerError, 'There was a problem executing the command.'
+  end
+
+  def sha
+    ENV['CIRCLECI_SHA1'] ? ENV['CIRCLECI_SHA1'] : ENV['SHA']
+  end
+
+  task :tag do
+    require_relative 'lib/lint_trap/version'
+
+    system("docker tag lintci/spin_cycle:#{sha} lintci/spin_cycle:latest") and fail_on_error
+    system("docker tag lintci/spin_cycle:#{sha} lintci/spin_cycle:#{LintTrap::VERSION}") and fail_on_error
+  end
+
+  task :build do
+    system("docker build -t lintci/spin_cycle:#{sha} .") and fail_on_error
+  end
+
+  task :push do
+    system("docker login -e #{ENV['DOCKER_EMAIL']} -u #{ENV['DOCKER_USER']} -p #{ENV['DOCKER_EMAIL']}") and fail_on_error
+    system("docker push lintci/spin_cycle:#{sha}")
+    system("docker push lintci/spin_cycle:#{LintTrap::VERSION}")
+    system("docker push lintci/spin_cycle:latest")
+  end
+end

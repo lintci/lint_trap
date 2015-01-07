@@ -1,3 +1,20 @@
 machine:
   services:
     - docker
+checkout:
+  pre:
+    - git config --global user.email "circleci@lintci.com"
+    - git config --global user.name "LintCI's CircleCI Bot"
+dependencies:
+  post:
+    - bundle exec rake docker:build docker:tag
+deployment:
+  rubygems:
+    branch: master
+    commands:
+      - bundle exec rake release
+  dockerhub:
+    branch: master
+    commands:
+      - bundle exec rake docker:push
+
