@@ -1,5 +1,6 @@
 machine:
-  python: 2.7.8
+  python:
+    version: 2.7.8
 dependencies:
   post:
     - npm install -g jshint csslint durable-json-lint-cli coffeelint
