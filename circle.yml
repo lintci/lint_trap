@@ -1,6 +1,8 @@
 machine:
   python:
     version: 2.7.8
+  services:
+    - docker
 dependencies:
   post:
     - npm install -g jshint csslint durable-json-lint-cli coffeelint
