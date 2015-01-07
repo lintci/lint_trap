@@ -29,7 +29,7 @@ describe LintTrap::Language do
     end
 
     context 'when given a Java file' do
-      let(:file){fixture_path('good.java')}
+      let(:file){fixture_path('Good.java')}
 
       it{is_expected.to eq(described_class::Java)}
     end
