@@ -12,16 +12,31 @@ require_relative 'linter/scsslint'
 module LintTrap
   # Linter lookup
   module Linter
-    class << self
-      def find(name)
-        classes = constants.map do |const|
-          const_get(const)
-        end
+    @linters = {}
 
-        classes.find do |linter|
-          linter.name.split('::').last == name
-        end
+    class << self
+      def register(linter)
+        linters[linter.canonical_name] = linter
       end
+
+      def find(name)
+        linters[name]
+      end
+
+    protected
+
+      attr_reader :linters
     end
+
+    register CheckStyle
+    register CoffeeLint
+    register CPPCheck
+    register CSSLint
+    register GoLint
+    register JSHint
+    register JSONLint
+    register PyLint
+    register RuboCop
+    register SCSSLint
   end
 end

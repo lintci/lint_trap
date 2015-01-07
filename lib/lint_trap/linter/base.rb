@@ -7,6 +7,10 @@ module LintTrap
     class Base
       CONFIG_PATH = File.expand_path('../../../../config', __FILE__)
 
+      def self.canonical_name
+        name.split('::').last
+      end
+
       def initialize(container:, **options)
         @container = container
         @options = options
@@ -18,6 +22,10 @@ module LintTrap
             yield violation
           end
         end
+      end
+
+      def name
+        self.class.canonical_name
       end
 
     protected
@@ -43,7 +51,7 @@ module LintTrap
       end
 
       def command_name
-        self.class.name.split('::').last.downcase
+        name.downcase
       end
     end
   end
