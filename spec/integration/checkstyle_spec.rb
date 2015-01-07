@@ -40,7 +40,7 @@ describe LintTrap::Linter::CheckStyle do
     end
   end
 
-  context 'with docker container', if: !ENV['CI'] do
+  context 'with docker container' do
     let(:container){LintTrap::Container::Docker.new('lintci/spin_cycle:latest', fixture_path)}
 
     it_behaves_like '#lint'
