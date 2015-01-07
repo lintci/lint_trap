@@ -6,7 +6,7 @@ module LintTrap
     class Line < Base
       def parse
         io.each_line do |line|
-          puts line
+          puts line if ENV['DEBUG_LINTING']
           next unless (violation = parse_line(line))
 
           yield violation

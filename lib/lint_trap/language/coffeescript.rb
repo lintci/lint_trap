@@ -4,10 +4,8 @@ require_relative '../linter/coffeelint'
 module LintTrap
   module Language
     # CoffeeScript
-    module CoffeeScript
-      extend Base
-
-      def self.linters
+    class CoffeeScript < Base
+      def linters
         [Linter::CoffeeLint]
       end
     end

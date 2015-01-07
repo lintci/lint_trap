@@ -4,10 +4,8 @@ require_relative '../linter/jshint'
 module LintTrap
   module Language
     # JavaScript
-    module JavaScript
-      extend Base
-
-      def self.linters
+    class JavaScript < Base
+      def linters
         [Linter::JSHint]
       end
     end

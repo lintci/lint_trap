@@ -4,10 +4,8 @@ require_relative '../linter/jsonlint'
 module LintTrap
   module Language
     # JSON
-    class JSON
-      extend Base
-
-      def self.linters
+    class JSON < Base
+      def linters
         [Linter::JSONLint]
       end
     end

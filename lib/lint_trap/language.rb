@@ -1,3 +1,5 @@
+require 'linguist'
+
 require_relative 'language/coffeescript'
 require_relative 'language/cpp'
 require_relative 'language/css'
@@ -12,12 +14,37 @@ require_relative 'language/scss'
 module LintTrap
   # Language lookup
   module Language
-    class << self
-      def find(name)
-        classes = constants.map{|const| const_get(const)}
+    @languages = {}
 
-        classes.find{|language| language.name == name}
+    class << self
+      def register(language)
+        languages[language.canonical_name] = language.new
       end
+
+      def detect(file)
+        language = Linguist::FileBlob.new(file).language
+
+        find(language.name)
+      end
+
+      def find(name)
+        languages[name]
+      end
+
+    protected
+
+      attr_reader :languages
     end
+
+    register CoffeeScript
+    register CPP
+    register CSS
+    register Go
+    register Java
+    register JavaScript
+    register JSON
+    register Python
+    register Ruby
+    register SCSS
   end
 end

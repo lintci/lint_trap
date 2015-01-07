@@ -4,14 +4,12 @@ require_relative '../linter/cppcheck'
 module LintTrap
   module Language
     # C++
-    module CPP
-      extend Base
-
-      def self.name
+    class CPP < Base
+      def self.canonical_name
         'C++'
       end
 
-      def self.linters
+      def linters
         [Linter::CPPCheck]
       end
     end

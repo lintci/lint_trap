@@ -4,10 +4,8 @@ require_relative '../linter/rubocop'
 module LintTrap
   module Language
     # Ruby
-    module Ruby
-      extend Base
-
-      def self.linters
+    class Ruby < Base
+      def linters
         [Linter::RuboCop]
       end
     end

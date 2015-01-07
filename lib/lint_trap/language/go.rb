@@ -4,10 +4,8 @@ require_relative '../linter/golint'
 module LintTrap
   module Language
     # Go
-    module Go
-      extend Base
-
-      def self.linters
+    class Go < Base
+      def linters
         [Linter::GoLint]
       end
     end

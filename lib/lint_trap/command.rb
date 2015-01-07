@@ -14,7 +14,7 @@ module LintTrap
 
     def run(container)
       Bundler.with_clean_env do
-        puts command(container)
+        puts command(container) if ENV['DEBUG_LINTING']
         Open3.popen3(command(container)) do |_, stdout, _, thread|
           yield stdout
 

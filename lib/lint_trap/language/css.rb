@@ -4,10 +4,8 @@ require_relative '../linter/csslint'
 module LintTrap
   module Language
     # CSS
-    module CSS
-      extend Base
-
-      def self.linters
+    class CSS < Base
+      def linters
         [Linter::CSSLint]
       end
     end

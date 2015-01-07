@@ -4,10 +4,8 @@ require_relative '../linter/scsslint'
 module LintTrap
   module Language
     # SCSS
-    module SCSS
-      extend Base
-
-      def self.linters
+    class SCSS < Base
+      def linters
         [Linter::SCSSLint]
       end
     end

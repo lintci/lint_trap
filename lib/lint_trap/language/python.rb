@@ -4,10 +4,8 @@ require_relative '../linter/pylint'
 module LintTrap
   module Language
     # Python
-    module Python
-      extend Base
-
-      def self.linters
+    class Python < Base
+      def linters
         [Linter::PyLint]
       end
     end
