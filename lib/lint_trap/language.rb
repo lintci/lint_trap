@@ -18,7 +18,7 @@ module LintTrap
 
     class << self
       def register(language)
-        languages[language.canonical_name] = language.new
+        languages[language.canonical_name] = language
       end
 
       def detect(file)

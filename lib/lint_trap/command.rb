@@ -4,7 +4,7 @@ require 'open3'
 module LintTrap
   # Wraps the execution of linter commands
   class Command
-    attr_reader :binary
+    attr_reader :binary, :flags, :files
 
     def initialize(binary, flags, files)
       @binary = binary
@@ -29,11 +29,11 @@ module LintTrap
     alias_method :to_s, :command
 
     def files(container = LintTrap::Container::Fake.new)
-      Shellwords.join(@files.map{|file| container.container_path(file)})
+      Shellwords.join(files.map{|file| container.container_path(file)})
     end
 
     def flags
-      @flags.join(' ')
+      flags.join(' ')
     end
   end
 end
