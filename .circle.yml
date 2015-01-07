@@ -1,0 +1,9 @@
+dependencies:
+  post:
+    - npm install -g jshint csslint durable-json-lint-cli coffeelint
+    - go get github.com/golang/lint/golint
+    - pip install -U pylint
+    - gem install rubocop -v0.26.1
+    - gem install scss-lint -v0.28.0
+    - apt-get install cppcheck
+
