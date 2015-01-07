@@ -17,7 +17,7 @@ describe LintTrap::Linter::CPPCheck do
             length: nil,
             rule: 'unassignedVariable',
             severity: 'style',
-            message: "Variable 'p' is not assigned a value"
+            message: "Variable 'p' is not assigned a value."
           }, {
             file: file,
             line: '4',
@@ -33,7 +33,7 @@ describe LintTrap::Linter::CPPCheck do
             length: nil,
             rule: 'unusedFunction',
             severity: 'style',
-            message: "The function 'f' is never used"
+            message: "The function 'f' is never used."
           }
         )
       end
