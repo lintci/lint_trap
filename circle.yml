@@ -1,6 +1,8 @@
 machine:
   services:
     - docker
+  environment:
+    DEBUG_LINTER: true
 checkout:
   pre:
     - git config --global user.email "circleci@lintci.com"

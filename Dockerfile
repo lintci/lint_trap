@@ -197,7 +197,6 @@ RUN echo 'CPPCheck' && cppcheck --version && echo \
  && echo 'RuboCop' && rubocop --version && echo \
  && echo 'SCSSLint' && scss-lint --version && echo
 
-
 ###### Finally
 USER $user
 WORKDIR $homedir
