@@ -4,5 +4,5 @@ dependencies:
     - go get github.com/golang/lint/golint
     - gem install rubocop -v0.26.1
     - gem install scss-lint -v0.28.0
-    - apt-get install cppcheck
+    - sudo apt-get install cppcheck
     - pip install -U pylint
