@@ -41,7 +41,7 @@ namespace :docker do
   end
 
   task :push do
-    system("docker login -e #{ENV['DOCKER_EMAIL']} -u #{ENV['DOCKER_USER']} -p #{ENV['DOCKER_EMAIL']}") and fail_on_error
+    system("docker login -e #{ENV['DOCKER_EMAIL']} -u #{ENV['DOCKER_USER']} -p #{ENV['DOCKER_PASSWORD']}") and fail_on_error
     system("docker push lintci/spin_cycle:#{sha}")
     system("docker push lintci/spin_cycle:#{LintTrap::VERSION}")
     system("docker push lintci/spin_cycle:latest")
