@@ -11,12 +11,9 @@ dependencies:
   post:
     - bundle exec rake docker:build docker:tag
 deployment:
-  rubygems:
+  master:
     branch: master
     commands:
-      - bundle exec rake credentials release
-  hub:
-    branch: master
-    commands:
-      - bundle exec rake docker:push
+      - bundle exec rake credentials release docker:push
+
 
