@@ -36,6 +36,7 @@ namespace :docker do
   end
 
   task :build do
+    system("docker pull lintci/spin_cycle:latest") and fail_on_error
     system("docker build -t lintci/spin_cycle:#{sha} .") and fail_on_error
   end
 
