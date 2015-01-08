@@ -31,8 +31,8 @@ namespace :docker do
   task :tag do
     require_relative 'lib/lint_trap/version'
 
-    system("docker tag lintci/spin_cycle:#{sha} lintci/spin_cycle:latest") and fail_on_error
-    system("docker tag lintci/spin_cycle:#{sha} lintci/spin_cycle:#{LintTrap::VERSION}") and fail_on_error
+    system("docker tag -f lintci/spin_cycle:#{sha} lintci/spin_cycle:latest") and fail_on_error
+    system("docker tag -f lintci/spin_cycle:#{sha} lintci/spin_cycle:#{LintTrap::VERSION}") and fail_on_error
   end
 
   task :build do
