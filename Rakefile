@@ -8,13 +8,12 @@ RSpec::Core::RakeTask.new(:spec)
 task :default => :spec
 
 task :credentials do
-  require 'file'
   require 'fileutils'
 
   credentials = "---\n:rubygems_api_key: #{ENV['RUBYGEMS_API_KEY']}"
 
   FileUtils.mkdir_p('~/.gem')
-  File.write('~/.gem/credentials')
+  File.write('~/.gem/credentials', credentials)
 end
 
 namespace :docker do
