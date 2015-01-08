@@ -13,7 +13,7 @@ task :credentials do
   credentials = "---\n:rubygems_api_key: #{ENV['RUBYGEMS_API_KEY']}"
 
   FileUtils.mkdir_p('~/.gem')
-  File.write('~/.gem/credentials', credentials)
+  File.write(File.expand_path('~') + '/.gem/credentials', credentials)
 end
 
 namespace :docker do
