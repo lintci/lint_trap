@@ -10,7 +10,7 @@ task :default => :spec
 task :credentials do
   require 'fileutils'
 
-  credentials = "---\n:rubygems_api_key: #{ENV['RUBYGEMS_API_KEY']}"
+  credentials = "---\n:rubygems_api_key: #{ENV['RUBYGEMS_API_KEY']}\n"
   credentials_path = File.expand_path('~') + '/.gem/credentials'
 
   FileUtils.mkdir_p('~/.gem')
