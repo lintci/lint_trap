@@ -15,7 +15,7 @@ deployment:
     branch: master
     commands:
       - bundle exec rake credentials release
-  dockerhub:
+  hub:
     branch: master
     commands:
       - bundle exec rake docker:push
