@@ -103,9 +103,17 @@ RUN apt-get update \
 RUN echo 'gem: --no-rdoc --no-ri' >> "$HOME/.gemrc"
 
 ### Java
-RUN apt-get update && apt-get install -y \
-    default-jre \
- && rm -rf /var/lib/apt/lists/*
+ENV JAVA_VERSION 7u71
+ENV JAVA_DEBIAN_VERSION 7u71-2.5.3-0ubuntu0.14.04.1
+
+RUN apt-get update \
+ && apt-get install -y \
+    curl \
+    openjdk-7-jre-headless="$JAVA_DEBIAN_VERSION" \
+    unzip \
+    wget \
+  && rm -rf /var/lib/apt/lists/*
+
 
 ### Go
 # SCMs for "go get", gcc for cgo
@@ -162,25 +170,37 @@ RUN set -x \
 ###### Linters
 
 ### CPPCheck
+ENV CPPCHECK_VERSION 1.61-1
+
 RUN apt-get update && apt-get install -y \
-    cppcheck \
+    cppcheck=$CPPCHECK_VERSION \
   && rm -rf /var/lib/apt/lists/*
 
 ### GoLint
 RUN go get github.com/golang/lint/golint
 
 ### JSHint, CSSLint, JSONLint, CoffeeLint
+ENV JSHINT_VERSION 2.5.11
+ENV CSSLINT_VERSION 0.10.0
+ENV JSONLINT_VERSION 0.0.4
+ENV COFFEELINT_VERSION 1.8.1
+
 RUN npm install -g \
-    jshint \
-    csslint \
-    durable-json-lint-cli \
-    coffeelint
+    jshint@$JSHINT_VERSION \
+    csslint@$CSSLINT_VERSION \
+    durable-json-lint-cli@$JSONLINT_VERSION \
+    coffeelint@$COFFEELINT_VERSION
 
 ### PyLint
-RUN pip install pylint
+ENV PYLINT_VERSION 1.4.0
+
+RUN pip install pylint==$PYLINT_VERSION
 
 ### RuboCop, SCSSLint
-RUN gem install rubocop scss-lint
+ENV RUBOCOP_VERSION 0.28.0
+ENV SCSSLINT_VERSION 0.32.0
+
+RUN gem install rubocop:$RUBOCOP_VERSION scss-lint:$SCSSLINT_VERSION
 
 ###### Display Versions
 RUN echo 'CPPCheck' && cppcheck --version && echo \
