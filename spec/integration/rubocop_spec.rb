@@ -25,7 +25,7 @@ describe LintTrap::Linter::RuboCop do
             length: '4',
             rule: 'Style/MethodName',
             severity: 'convention',
-            message: 'Use snake_case for method names.'
+            message: 'Use snake_case for methods.'
           }
         )
       end

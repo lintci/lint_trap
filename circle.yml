@@ -14,7 +14,7 @@ deployment:
   rubygems:
     branch: master
     commands:
-      - bundle exec rake release
+      - bundle exec rake credentials release
   dockerhub:
     branch: master
     commands:

@@ -5,6 +5,16 @@ RSpec::Core::RakeTask.new(:spec)
 
 task :default => :spec
 
+task :credentials do
+  require 'file'
+  require 'fileutils'
+
+  credentials = "---\n:rubygems_api_key: #{ENV['RUBYGEMS_API_KEY']}"
+
+  FileUtils.mkdir_p('~/.gem')
+  File.write('~/.gem/credentials')
+end
+
 namespace :docker do
   DockerError = Class.new(StandardError)
 
@@ -15,7 +25,7 @@ namespace :docker do
   end
 
   def sha
-    ENV['CIRCLECI_SHA1'] ? ENV['CIRCLECI_SHA1'] : ENV['SHA']
+    ENV['CIRCLE_SHA1'] ? ENV['CIRCLE_SHA1'] : ENV['SHA']
   end
 
   task :tag do
