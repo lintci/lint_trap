@@ -11,9 +11,11 @@ task :credentials do
   require 'fileutils'
 
   credentials = "---\n:rubygems_api_key: #{ENV['RUBYGEMS_API_KEY']}"
+  credentials_path = File.expand_path('~') + '/.gem/credentials'
 
   FileUtils.mkdir_p('~/.gem')
-  File.write(File.expand_path('~') + '/.gem/credentials', credentials)
+  File.write(credentials_path, credentials)
+  FileUtils.chmod(0600, credentials_path)
 end
 
 namespace :docker do
