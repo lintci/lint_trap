@@ -15,8 +15,10 @@ module LintTrap
     @linters = {}
 
     class << self
-      def register(linter)
-        linters[linter.canonical_name] = linter
+      def register(linter_class)
+        linter = linter_class.new
+
+        linters[linter.name] = linter
       end
 
       def find(name)

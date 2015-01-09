@@ -2,12 +2,8 @@ module LintTrap
   module Language
     # Interface for languages
     class Base
-      def self.canonical_name
-        name.split('::').last
-      end
-
       def name
-        self.class.canonical_name
+        self.class.name.split('::').last
       end
 
       def linters

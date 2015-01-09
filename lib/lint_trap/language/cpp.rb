@@ -5,7 +5,7 @@ module LintTrap
   module Language
     # C++
     class CPP < Base
-      def self.canonical_name
+      def name
         'C++'
       end
 

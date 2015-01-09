@@ -7,10 +7,6 @@ module LintTrap
     class Base
       CONFIG_PATH = File.expand_path('../../../../config', __FILE__)
 
-      def self.canonical_name
-        name.split('::').last
-      end
-
       def lint(files, container, options)
         @container, @options = container, options
 
@@ -22,7 +18,7 @@ module LintTrap
       end
 
       def name
-        self.class.canonical_name
+        self.class.name.split('::').last
       end
 
     protected
