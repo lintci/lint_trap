@@ -21,6 +21,10 @@ module LintTrap
         self.class.name.split('::').last
       end
 
+      def ==(other)
+        name == other.name
+      end
+
     protected
 
       attr_reader :container, :options

@@ -10,7 +10,7 @@ module LintTrap
       end
 
       def linters
-        [Linter::CPPCheck]
+        [Linter::CPPCheck].map(&:new)
       end
     end
   end

@@ -6,7 +6,7 @@ module LintTrap
     # JavaScript
     class JavaScript < Base
       def linters
-        [Linter::JSHint]
+        [Linter::JSHint].map(&:new)
       end
     end
   end

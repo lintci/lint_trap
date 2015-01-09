@@ -9,6 +9,10 @@ module LintTrap
       def linters
         raise NotImplementedError, 'Must define what linters this language supports.'
       end
+
+      def ==(other)
+        name == other.name
+      end
     end
   end
 end

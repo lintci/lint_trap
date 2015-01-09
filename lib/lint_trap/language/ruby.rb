@@ -6,7 +6,7 @@ module LintTrap
     # Ruby
     class Ruby < Base
       def linters
-        [Linter::RuboCop]
+        [Linter::RuboCop].map(&:new)
       end
     end
   end

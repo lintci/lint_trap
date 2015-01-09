@@ -4,5 +4,5 @@ describe LintTrap::Language::Ruby do
   subject(:language){described_class.new}
 
   its(:name){is_expected.to eq('Ruby')}
-  its(:linters){is_expected.to eq([LintTrap::Linter::RuboCop])}
+  its(:linters){is_expected.to eq([LintTrap::Linter::RuboCop.new])}
 end
