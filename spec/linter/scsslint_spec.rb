@@ -2,14 +2,14 @@ require 'spec_helper'
 
 describe LintTrap::Linter::SCSSLint do
   let(:container){LintTrap::Container::Fake.new}
-  let(:config){nil}
+  let(:options){{}}
   let(:files){%w(good.scss bad.scss)}
-  subject(:linter){described_class.new(container: container, config: config)}
+  subject(:linter){described_class.new}
   let(:command){instance_double(LintTrap::Command)}
 
   describe '#lint' do
     context 'when config is provided' do
-      let(:config){'.scss-lint.yml'}
+      let(:options){{config: '.scss-lint.yml'}}
 
       it 'runs the lint command with the correct arguments' do
         expect(LintTrap::Command).to receive(:new).with(
@@ -22,7 +22,7 @@ describe LintTrap::Linter::SCSSLint do
         ).and_return(command)
         expect(command).to receive(:run).with(container)
 
-        linter.lint(files)
+        linter.lint(files, container, options)
       end
     end
 
@@ -37,7 +37,7 @@ describe LintTrap::Linter::SCSSLint do
         ).and_return(command)
         expect(command).to receive(:run).with(container)
 
-        linter.lint(files)
+        linter.lint(files, container, options)
       end
     end
   end

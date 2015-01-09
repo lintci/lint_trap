@@ -11,12 +11,9 @@ module LintTrap
         name.split('::').last
       end
 
-      def initialize(container:, **options)
-        @container = container
-        @options = options
-      end
+      def lint(files, container, options)
+        @container, @options = container, options
 
-      def lint(files)
         command(files).run(container) do |stdout|
           parser(stdout).parse do |violation|
             yield violation
@@ -46,7 +43,7 @@ module LintTrap
         container.config_path(path)
       end
 
-      def flags
+      def flags(options)
         raise NotImplementedError, 'Method flags must be implemented.'
       end
 

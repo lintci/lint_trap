@@ -2,9 +2,9 @@ require 'spec_helper'
 
 describe LintTrap::Linter::CPPCheck do
   let(:container){LintTrap::Container::Fake.new}
-  let(:config){nil}
+  let(:options){{}}
   let(:files){%w(good.cpp bad.cpp)}
-  subject(:linter){described_class.new(container: container, config: config)}
+  subject(:linter){described_class.new}
   let(:command){instance_double(LintTrap::Command)}
 
   describe '#lint' do
@@ -20,7 +20,7 @@ describe LintTrap::Linter::CPPCheck do
       ).and_return(command)
       expect(command).to receive(:run).with(container)
 
-      linter.lint(files)
+      linter.lint(files, container, options)
     end
   end
 end

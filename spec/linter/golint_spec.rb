@@ -2,9 +2,9 @@ require 'spec_helper'
 
 describe LintTrap::Linter::GoLint do
   let(:container){LintTrap::Container::Fake.new}
-  let(:config){nil}
+  let(:options){{}}
   let(:files){%w(good.go bad.go)}
-  subject(:linter){described_class.new(container: container, config: config)}
+  subject(:linter){described_class.new}
   let(:command){instance_double(LintTrap::Command)}
 
   describe '#lint' do
@@ -16,7 +16,7 @@ describe LintTrap::Linter::GoLint do
       ).and_return(command)
       expect(command).to receive(:run).with(container)
 
-      linter.lint(files)
+      linter.lint(files, container, options)
     end
   end
 end

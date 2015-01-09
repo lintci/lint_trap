@@ -2,14 +2,14 @@ require 'spec_helper'
 
 describe LintTrap::Linter::PyLint do
   let(:container){LintTrap::Container::Fake.new}
-  let(:config){nil}
+  let(:options){{}}
   let(:files){%w(good.py bad.py)}
-  subject(:linter){described_class.new(container: container, config: config)}
+  subject(:linter){described_class.new}
   let(:command){instance_double(LintTrap::Command)}
 
   describe '#lint' do
     context 'when config is provided' do
-      let(:config){'.pylintrc'}
+      let(:options){{config: '.pylintrc'}}
 
       it 'runs the lint command with the correct arguments' do
         expect(LintTrap::Command).to receive(:new).with(
@@ -17,13 +17,13 @@ describe LintTrap::Linter::PyLint do
           [
             '-r', 'no',
             '--msg-template', '"{abspath}:{line}:{column}::{symbol}:{category}:{msg}"',
-            '--rcfile', config
+            '--rcfile', options[:config]
           ],
           files
         ).and_return(command)
         expect(command).to receive(:run).with(container)
 
-        linter.lint(files)
+        linter.lint(files, container, options)
       end
     end
 
@@ -39,7 +39,7 @@ describe LintTrap::Linter::PyLint do
         ).and_return(command)
         expect(command).to receive(:run).with(container)
 
-        linter.lint(files)
+        linter.lint(files, container, options)
       end
     end
   end
