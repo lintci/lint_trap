@@ -4,8 +4,12 @@ describe LintTrap::Linter::CheckStyle do
   let(:container){LintTrap::Container::Fake.new}
   let(:options){{}}
   let(:files){%w(Good.java bad.java)}
-  subject(:linter){described_class.new}
   let(:command){instance_double(LintTrap::Command)}
+  subject(:linter){described_class.new}
+
+  it_behaves_like 'linter'
+
+  its(:languages){is_expected.to eq([LintTrap::Language::Java.new])}
 
   describe '#lint' do
     context 'when config is provided' do

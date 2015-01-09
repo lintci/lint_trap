@@ -7,6 +7,10 @@ describe LintTrap::Linter::SCSSLint do
   subject(:linter){described_class.new}
   let(:command){instance_double(LintTrap::Command)}
 
+  it_behaves_like 'linter'
+
+  its(:languages){is_expected.to eq([LintTrap::Language::SCSS.new])}
+
   describe '#lint' do
     context 'when config is provided' do
       let(:options){{config: '.scss-lint.yml'}}

@@ -6,12 +6,16 @@ module LintTrap
         self.class.name.split('::').last
       end
 
-      def linters
-        raise NotImplementedError, 'Must define what linters this language supports.'
+      def linters(*classes)
+        classes.map(&:new)
       end
 
       def ==(other)
         name == other.name
+      end
+
+      def inspect
+        "<#{name}>"
       end
     end
   end

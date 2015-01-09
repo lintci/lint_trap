@@ -5,6 +5,10 @@ module LintTrap
   module Linter
     # Encapsulates logic specific to golint command line tool.
     class GoLint < Base
+      def languages
+        super(Language::Go)
+      end
+
     private
 
       def flags

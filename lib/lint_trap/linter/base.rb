@@ -21,8 +21,16 @@ module LintTrap
         self.class.name.split('::').last
       end
 
+      def languages(*classes)
+        classes.map(&:new)
+      end
+
       def ==(other)
         name == other.name
+      end
+
+      def inspect
+        "<#{name}>"
       end
 
     protected

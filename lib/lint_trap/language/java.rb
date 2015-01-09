@@ -6,7 +6,7 @@ module LintTrap
     # Java
     class Java < Base
       def linters
-        [Linter::CheckStyle].map(&:new)
+        super(Linter::CheckStyle)
       end
     end
   end

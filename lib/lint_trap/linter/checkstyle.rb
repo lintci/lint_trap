@@ -7,6 +7,10 @@ module LintTrap
       JAR = 'checkstyle/checkstyle_logger-all.jar'
       CHECKS_XML = 'checkstyle/sun_checks.xml'
 
+      def languages
+        super(Language::Java)
+      end
+
     private
 
       def command_name

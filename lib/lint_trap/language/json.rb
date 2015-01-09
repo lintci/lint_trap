@@ -6,7 +6,7 @@ module LintTrap
     # JSON
     class JSON < Base
       def linters
-        [Linter::JSONLint].map(&:new)
+        super(Linter::JSONLint)
       end
     end
   end

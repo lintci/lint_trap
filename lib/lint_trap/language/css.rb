@@ -6,7 +6,7 @@ module LintTrap
     # CSS
     class CSS < Base
       def linters
-        [Linter::CSSLint].map(&:new)
+        super(Linter::CSSLint)
       end
     end
   end
