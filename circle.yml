@@ -11,9 +11,8 @@ dependencies:
   cache_directories:
     - "~/.docker"
   post:
-    - bundle exec rake docker:load
+    - bundle exec rake docker:pull
     - bundle exec rake docker:build
-    - bundle exec rake docker:dump
     - bundle exec rake docker:tag
 deployment:
   master:
