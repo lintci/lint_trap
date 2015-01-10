@@ -19,12 +19,14 @@ task :credentials do
 end
 
 namespace :docker do
-  DockerError = Class.new(StandardError)
+  BuildError = Class.new(StandardError)
+  DOCKER_CACHE_PATH = File.expand_path('~/.docker')
+  DOCKER_IMAGE_PATH = File.join(DOCKER_CACHE_PATH, 'image.tar')
 
-  def fail_on_error
-    return if $? == 0
+  def run(command)
+    system(command)
 
-    raise DockerError, 'There was a problem executing the command.'
+    raise BuildError, 'There was a problem executing the command.' unless $?.zero?
   end
 
   def sha
@@ -34,19 +36,34 @@ namespace :docker do
   task :tag do
     require_relative 'lib/lint_trap/version'
 
-    system("docker tag -f lintci/spin_cycle:#{sha} lintci/spin_cycle:latest") or fail_on_error
-    system("docker tag -f lintci/spin_cycle:#{sha} lintci/spin_cycle:#{LintTrap::VERSION}") or fail_on_error
+    run("docker tag -f lintci/spin_cycle:#{sha} lintci/spin_cycle:latest")
+    run("docker tag -f lintci/spin_cycle:#{sha} lintci/spin_cycle:#{LintTrap::VERSION}")
+  end
+
+  task :pull do
+    run("docker pull lintci/spin_cycle:latest")
+  end
+
+  task :load do
+    if File.exist?(DOCKER_IMAGE_PATH)
+      run("docker load -i #{DOCKER_IMAGE_PATH}")
+    end
+  end
+
+  task :dump do
+    require 'fileutils'
+    FileUtils.mkdir_p(DOCKER_CACHE_PATH)
+    run("docker save lintci/spin_cycle > #{DOCKER_IMAGE_PATH}")
   end
 
   task :build do
-    system("docker pull lintci/spin_cycle:latest") or fail_on_error
-    system("docker build -t lintci/spin_cycle:#{sha} .") or fail_on_error
+    run("docker build -t lintci/spin_cycle:#{sha} .")
   end
 
   task :push do
-    system("docker login -e #{ENV['DOCKER_EMAIL']} -u #{ENV['DOCKER_USER']} -p #{ENV['DOCKER_PASSWORD']}") or fail_on_error
-    system("docker push lintci/spin_cycle:#{sha}") or fail_on_error
-    system("docker push lintci/spin_cycle:#{LintTrap::VERSION}") or fail_on_error
-    system("docker push lintci/spin_cycle:latest") or fail_on_error
+    run("docker login -e #{ENV['DOCKER_EMAIL']} -u #{ENV['DOCKER_USER']} -p #{ENV['DOCKER_PASSWORD']}")
+    run("docker push lintci/spin_cycle:#{sha}")
+    run("docker push lintci/spin_cycle:#{LintTrap::VERSION}")
+    run("docker push lintci/spin_cycle:latest")
   end
 end

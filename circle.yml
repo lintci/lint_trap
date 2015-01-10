@@ -8,8 +8,10 @@ checkout:
     - git config --global user.email "circleci@lintci.com"
     - git config --global user.name "LintCI's CircleCI Bot"
 dependencies:
+  cache_directories:
+    - "~/.docker"
   post:
-    - bundle exec rake docker:build docker:tag
+    - bundle exec rake docker:load docker:build docker:dump docker:tag
 deployment:
   master:
     branch: master
