@@ -34,19 +34,19 @@ namespace :docker do
   task :tag do
     require_relative 'lib/lint_trap/version'
 
-    system("docker tag -f lintci/spin_cycle:#{sha} lintci/spin_cycle:latest") and fail_on_error
-    system("docker tag -f lintci/spin_cycle:#{sha} lintci/spin_cycle:#{LintTrap::VERSION}") and fail_on_error
+    system("docker tag -f lintci/spin_cycle:#{sha} lintci/spin_cycle:latest") or fail_on_error
+    system("docker tag -f lintci/spin_cycle:#{sha} lintci/spin_cycle:#{LintTrap::VERSION}") or fail_on_error
   end
 
   task :build do
-    system("docker pull lintci/spin_cycle:latest") and fail_on_error
-    system("docker build -t lintci/spin_cycle:#{sha} .") and fail_on_error
+    system("docker pull lintci/spin_cycle:latest") or fail_on_error
+    system("docker build -t lintci/spin_cycle:#{sha} .") or fail_on_error
   end
 
   task :push do
-    system("docker login -e #{ENV['DOCKER_EMAIL']} -u #{ENV['DOCKER_USER']} -p #{ENV['DOCKER_PASSWORD']}") and fail_on_error
-    system("docker push lintci/spin_cycle:#{sha}")
-    system("docker push lintci/spin_cycle:#{LintTrap::VERSION}")
-    system("docker push lintci/spin_cycle:latest")
+    system("docker login -e #{ENV['DOCKER_EMAIL']} -u #{ENV['DOCKER_USER']} -p #{ENV['DOCKER_PASSWORD']}") or fail_on_error
+    system("docker push lintci/spin_cycle:#{sha}") or fail_on_error
+    system("docker push lintci/spin_cycle:#{LintTrap::VERSION}") or fail_on_error
+    system("docker push lintci/spin_cycle:latest") or fail_on_error
   end
 end
