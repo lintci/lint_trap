@@ -19,51 +19,82 @@ task :credentials do
 end
 
 namespace :docker do
-  BuildError = Class.new(StandardError)
-  DOCKER_CACHE_PATH = File.expand_path('~/.docker')
-  DOCKER_IMAGE_PATH = File.join(DOCKER_CACHE_PATH, 'image.tar')
+  module Docker
+    DOCKER_CACHE_PATH = File.expand_path('~/.docker')
+    DOCKER_IMAGE_PATH = File.join(DOCKER_CACHE_PATH, 'image.tar')
+    IMAGE_NAME = 'lintci/spin_cycle'
 
-  def run(command)
-    system(command)
+    BuildError = Class.new(StandardError)
 
-    raise BuildError, 'There was a problem executing the command.' unless $?.zero?
-  end
 
-  def sha
-    ENV['CIRCLE_SHA1'] ? ENV['CIRCLE_SHA1'] : ENV['SHA']
-  end
+    def tag
+      run("docker tag -f #{image_sha} #{image_latest}")
+      run("docker tag -f #{image_sha} #{image_version}")
+    end
 
-  task :tag do
-    require_relative 'lib/lint_trap/version'
+    def pull
+      run("docker pull #{image_latest}")
+    end
 
-    run("docker tag -f lintci/spin_cycle:#{sha} lintci/spin_cycle:latest")
-    run("docker tag -f lintci/spin_cycle:#{sha} lintci/spin_cycle:#{LintTrap::VERSION}")
-  end
+    def load
+      if File.exist?(DOCKER_IMAGE_PATH)
+        run("docker load -i #{DOCKER_IMAGE_PATH}")
+      else
+        pull
+      end
+    end
 
-  task :pull do
-    run("docker pull lintci/spin_cycle:latest")
-  end
+    def dump
+      require 'fileutils'
 
-  task :load do
-    if File.exist?(DOCKER_IMAGE_PATH)
-      run("docker load -i #{DOCKER_IMAGE_PATH}")
+      FileUtils.mkdir_p(DOCKER_CACHE_PATH)
+      run("docker save #{image_latest} > #{DOCKER_IMAGE_PATH}")
+    end
+
+    def build
+      run("docker build -t #{image_sha} .")
+    end
+
+    def push
+      run("docker login -e #{ENV['DOCKER_EMAIL']} -u #{ENV['DOCKER_USER']} -p #{ENV['DOCKER_PASSWORD']}")
+      run("docker push #{image_sha}")
+      run("docker push #{image_version}")
+      run("docker push #{image_latest}")
+    end
+
+  private
+
+    def run(command)
+      system(command)
+
+      raise BuildError, 'There was a problem executing the command.' unless $?.zero?
+    end
+
+    def image_sha
+      "#{IMAGE_NAME}:#{sha}"
+    end
+
+    def image_version
+      require_relative 'lib/lint_trap/version'
+
+      "#{IMAGE_NAME}:#{LintTrap::VERSION}"
+    end
+
+    def image_latest
+      "#{IMAGE_NAME}:latest"
+    end
+
+    def sha
+      sha = ENV['CIRCLE_SHA1'] ? ENV['CIRCLE_SHA1'] : `git rev-parse HEAD`.strip
     end
   end
 
-  task :dump do
-    require 'fileutils'
-    FileUtils.mkdir_p(DOCKER_CACHE_PATH)
-    run("docker save lintci/spin_cycle > #{DOCKER_IMAGE_PATH}")
-  end
+  include Docker
 
-  task :build do
-    run("docker build -t lintci/spin_cycle:#{sha} .")
-  end
-
-  task :push do
-    run("docker login -e #{ENV['DOCKER_EMAIL']} -u #{ENV['DOCKER_USER']} -p #{ENV['DOCKER_PASSWORD']}")
-    run("docker push lintci/spin_cycle:#{sha}")
-    run("docker push lintci/spin_cycle:#{LintTrap::VERSION}")
-    run("docker push lintci/spin_cycle:latest")
-  end
+  task(:tag){tag}
+  task(:pull){pull}
+  task(:load){load}
+  task(:dump){dump}
+  task(:build){build}
+  task(:push){push}
 end
