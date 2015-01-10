@@ -6,7 +6,7 @@ module LintTrap
     # Python
     class Python < Base
       def linters
-        [Linter::PyLint].map(&:new)
+        super(Linter::PyLint)
       end
     end
   end

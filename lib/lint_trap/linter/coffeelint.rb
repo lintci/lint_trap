@@ -6,6 +6,10 @@ module LintTrap
     class CoffeeLint < Base
       REPORTER = 'coffeelint/lint_trap.coffee'
 
+      def languages
+        super(Language::CoffeeScript)
+      end
+
     private
 
       def flags

@@ -5,6 +5,10 @@ module LintTrap
   module Linter
     # Encapsulates logic specific to csslint command line tool.
     class CSSLint < Base
+      def languages
+        super(Language::CSS)
+      end
+
     private
 
       def flags

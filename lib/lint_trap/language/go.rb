@@ -6,7 +6,7 @@ module LintTrap
     # Go
     class Go < Base
       def linters
-        [Linter::GoLint].map(&:new)
+        super(Linter::GoLint)
       end
     end
   end

@@ -6,7 +6,7 @@ module LintTrap
     # CoffeeScript
     class CoffeeScript < Base
       def linters
-        [Linter::CoffeeLint].map(&:new)
+        super(Linter::CoffeeLint)
       end
     end
   end
