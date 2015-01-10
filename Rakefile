@@ -67,7 +67,7 @@ namespace :docker do
     def run(command)
       system(command)
 
-      raise BuildError, 'There was a problem executing the command.' unless $?.zero?
+      raise BuildError, 'There was a problem executing the command.' unless $? == 0
     end
 
     def image_sha
