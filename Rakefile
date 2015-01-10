@@ -65,6 +65,7 @@ namespace :docker do
   private
 
     def run(command)
+      puts command
       system(command)
 
       raise BuildError, 'There was a problem executing the command.' unless $? == 0
