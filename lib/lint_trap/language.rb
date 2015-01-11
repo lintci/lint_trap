@@ -25,7 +25,7 @@ module LintTrap
       def detect(file)
         language = Linguist::FileBlob.new(file).language
 
-        find(language.name)
+        language && find(language.name)
       end
 
       def find(name)

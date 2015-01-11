@@ -69,6 +69,13 @@ describe LintTrap::Language do
 
       it{is_expected.to eq(nil)}
     end
+
+    context 'when given a known language file that is empty' do
+      let(:file){fixture_path('empty.rb')}
+
+      # Linguist can't figure out what language the empty file is
+      it{is_expected.to eq(nil)}
+    end
   end
 
   describe '.find' do
