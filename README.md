@@ -1,8 +1,8 @@
 # LintTrap
 
-[ ![Codeship Status for lintci/lint_trap](https://codeship.io/projects/2ce67c60-0c55-0132-9858-121f4cfeea24/status)](https://codeship.io/projects/32171)
+[![Circle CI](https://circleci.com/gh/lintci/lint_trap.svg?style=svg)](https://circleci.com/gh/lintci/lint_trap)
 
-Parses the output of various linters. Designed for usage with [permpress](https://github.com/lintci/permpress) on [LintCI](http://www.lintci.com).
+Detects languages of files, determines appropriate linters, and runs then. Created for [LintCI](http://www.lintci.com).
 
 ## Installation
 
