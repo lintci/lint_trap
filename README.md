@@ -22,19 +22,36 @@ Or install it yourself as:
 
 ## Usage
 
+### Language Detection
+
 ``` ruby
 require 'lint_trap'
-require 'stringio'
 
-# This would typically be a stdout for another process
-io = StringIO.new("bad.rb:2:7:4:Style/MethodName:convention:Use snake_case for methods.\n")
+language = LintTrap::Language.detect('bad.rb')
+language.name #=> 'Ruby'
+language.linters #=> [<Rubocop>]
+```
 
-LintTrap.parse('rubocop', io) do |violation|
-  puts violation.inspect
+### Linting
+
+``` ruby
+require 'lint_trap'
+
+container = LintTrap::Container::Docker.new('lintci/lint_trap')
+linter = LintTrap::Linter.find('RuboCop')
+
+linter.run(['bad.rb'], container, {}) do |violation|
+  violation #=> {
+            #     file: 'bad.rb',
+            #     line: '2',
+            #     column: '7',
+            #     length: '4',
+            #     rule: 'Style/MethodName',
+            #     severity: 'convention',
+            #     message: 'Use snake_case for methods.'
+            #   }
 end
 
-# Output
-# {:file=>"bad.rb", :line=>"2", :column=>"7", :length=>"4", :rule=>"Style/MethodName", :severity=>"convention", :message=>"Use snake_case for methods."}
 ```
 
 ## Contributing
