@@ -8,11 +8,12 @@ require_relative 'linter/jsonlint'
 require_relative 'linter/pylint'
 require_relative 'linter/rubocop'
 require_relative 'linter/scsslint'
+require_relative 'linter/unknown'
 
 module LintTrap
   # Linter lookup
   module Linter
-    @linters = {}
+    @linters = Hash.new{|h, v| h[v] = Unknown.new(v)}
 
     class << self
       def register(linter_class)

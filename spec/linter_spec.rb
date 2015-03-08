@@ -64,10 +64,10 @@ describe LintTrap::Linter do
       it{is_expected.to be_a(described_class::SCSSLint)}
     end
 
-    context 'when given an invalid linter' do
+    context 'when given an unknown linter' do
       let(:linter_name){'taco cheese'}
 
-      it{is_expected.to eq(nil)}
+      it{is_expected.to eq(described_class::Unknown.new(linter_name))}
     end
   end
 end

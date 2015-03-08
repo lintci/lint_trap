@@ -67,14 +67,14 @@ describe LintTrap::Language do
     context 'when given an unknown language file' do
       let(:file){fixture_path('lint.txt')}
 
-      it{is_expected.to eq(nil)}
+      it{is_expected.to eq(described_class::Unknown.new('Text'))}
     end
 
     context 'when given a known language file that is empty' do
       let(:file){fixture_path('empty.rb')}
 
       # Linguist can't figure out what language the empty file is
-      it{is_expected.to eq(nil)}
+      it{is_expected.to eq(described_class::Unknown.new)}
     end
   end
 
@@ -144,7 +144,7 @@ describe LintTrap::Language do
     context 'when given an invalid language' do
       let(:language_name){'invalid language'}
 
-      it{is_expected.to eq(nil)}
+      it{is_expected.to eq(described_class::Unknown.new(language_name))}
     end
   end
 end

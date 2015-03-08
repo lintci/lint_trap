@@ -10,6 +10,7 @@ require_relative 'language/json'
 require_relative 'language/python'
 require_relative 'language/ruby'
 require_relative 'language/scss'
+require_relative 'language/unknown'
 
 module LintTrap
   # Language lookup
@@ -23,13 +24,15 @@ module LintTrap
       end
 
       def detect(file)
-        language = Linguist::FileBlob.new(file).language
-
-        language && find(language.name)
+        if (language = Linguist::FileBlob.new(file).language)
+          find(language.name)
+        else
+          Unknown.new
+        end
       end
 
       def find(name)
-        languages[name]
+        languages[name] || Unknown.new(name)
       end
 
     protected

@@ -10,7 +10,13 @@ module LintTrap
         classes.map(&:new)
       end
 
+      def known?
+        true
+      end
+
       def ==(other)
+        return false unless other.respond_to?(:name, true)
+
         name == other.name
       end
 

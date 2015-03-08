@@ -8,6 +8,8 @@ module LintTrap
       CONFIG_PATH = File.expand_path('../../../../config', __FILE__)
 
       def lint(files, container, options)
+        return unless known?
+
         @container, @options = container, options
 
         command(files).run(container) do |stdout|
@@ -25,7 +27,13 @@ module LintTrap
         classes.map(&:new)
       end
 
+      def known?
+        true
+      end
+
       def ==(other)
+        return false unless other.respond_to?(:name, true)
+
         name == other.name
       end
 
