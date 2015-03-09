@@ -6,10 +6,10 @@ ENV user spin_cycle
 ENV group linters
 ENV homedir /home/spin_cycle
 
-RUN mkdir -p $homedir && \
-    groupadd -r $group -g 777 && \
-    useradd -u 666 -r -g $group -d $homedir -s /sbin/nologin -c "Docker image user" $user && \
-    chown -R $user:$group $homedir
+RUN mkdir -p $homedir \
+ && groupadd -r $group -g 777 \
+ && useradd -u 666 -r -g $group -d $homedir -s /sbin/nologin -c "Docker image user" $user \
+ && chown -R $user:$group $homedir
 
 ###### Packages
 USER root
@@ -20,12 +20,12 @@ RUN apt-get update && apt-get install -y \
     git \
     mercurial \
     subversion \
-  && rm -rf /var/lib/apt/lists/*
+ && rm -rf /var/lib/apt/lists/*
 
 RUN apt-get update && apt-get install -y \
     curl \
     wget \
-  && rm -rf /var/lib/apt/lists/*
+ && rm -rf /var/lib/apt/lists/*
 
 RUN apt-get update && apt-get install -y \
     autoconf \
@@ -48,15 +48,17 @@ RUN apt-get update && apt-get install -y \
     libxml2-dev \
     libxslt-dev \
     libyaml-dev \
+    python-software-properties \
+    software-properties-common \
     zlib1g-dev \
-  && rm -rf /var/lib/apt/lists/*
+ && rm -rf /var/lib/apt/lists/*
 
 ###### Languages
 
 ### Node.js
 RUN apt-get update && apt-get install -y \
     ca-certificates \
-  && rm -rf /var/lib/apt/lists/*
+ && rm -rf /var/lib/apt/lists/*
 
 # verify gpg and sha256: http://nodejs.org/dist/v0.10.31/SHASUMS256.txt.asc
 # gpg: aka "Timothy J Fontaine (Work) <tj.fontaine@joyent.com>"
@@ -66,19 +68,19 @@ ENV NODE_VERSION 0.10.35
 ENV NPM_VERSION 2.1.16
 
 RUN curl -SLO "http://nodejs.org/dist/v$NODE_VERSION/node-v$NODE_VERSION-linux-x64.tar.gz" \
-  && curl -SLO "http://nodejs.org/dist/v$NODE_VERSION/SHASUMS256.txt.asc" \
-  && gpg --verify SHASUMS256.txt.asc \
-  && grep " node-v$NODE_VERSION-linux-x64.tar.gz\$" SHASUMS256.txt.asc | sha256sum -c - \
-  && tar -xzf "node-v$NODE_VERSION-linux-x64.tar.gz" -C /usr/local --strip-components=1 \
-  && rm "node-v$NODE_VERSION-linux-x64.tar.gz" SHASUMS256.txt.asc \
-  && npm install -g npm@"$NPM_VERSION" \
-  && npm cache clear
+ && curl -SLO "http://nodejs.org/dist/v$NODE_VERSION/SHASUMS256.txt.asc" \
+ && gpg --verify SHASUMS256.txt.asc \
+ && grep " node-v$NODE_VERSION-linux-x64.tar.gz\$" SHASUMS256.txt.asc | sha256sum -c - \
+ && tar -xzf "node-v$NODE_VERSION-linux-x64.tar.gz" -C /usr/local --strip-components=1 \
+ && rm "node-v$NODE_VERSION-linux-x64.tar.gz" SHASUMS256.txt.asc \
+ && npm install -g npm@"$NPM_VERSION" \
+ && npm cache clear
 
 ### Ruby
 RUN apt-get update && apt-get install -y \
     curl \
     procps \
-  && rm -rf /var/lib/apt/lists/*
+ && rm -rf /var/lib/apt/lists/*
 
 ENV RUBY_MAJOR 2.2
 ENV RUBY_VERSION 2.2.0
@@ -86,11 +88,13 @@ ENV RUBY_VERSION 2.2.0
 # some of ruby's build scripts are written in ruby
 # we purge this later to make sure our final image uses what we just built
 RUN apt-get update \
-  && apt-get install -y bison ruby \
+  && apt-get install -y \
+     bison \
+     ruby \
   && rm -rf /var/lib/apt/lists/* \
   && mkdir -p /usr/src/ruby \
   && curl -SL "http://cache.ruby-lang.org/pub/ruby/$RUBY_MAJOR/ruby-$RUBY_VERSION.tar.bz2" \
-    | tar -xjC /usr/src/ruby --strip-components=1 \
+   | tar -xjC /usr/src/ruby --strip-components=1 \
   && cd /usr/src/ruby \
   && autoconf \
   && ./configure --disable-install-doc \
@@ -103,21 +107,22 @@ RUN apt-get update \
 RUN echo 'gem: --no-rdoc --no-ri' >> "$HOME/.gemrc"
 
 ### Java
-ENV JAVA_VERSION 7u71
-ENV JAVA_DEBIAN_VERSION 7u71-2.5.3-0ubuntu0.14.04.1
-
-RUN apt-get update \
+RUN echo oracle-java7-installer shared/accepted-oracle-license-v1-1 select true \
+  | debconf-set-selections \
+ && add-apt-repository -y ppa:webupd8team/java \
+ && apt-get update \
  && apt-get install -y \
-    curl \
-    openjdk-7-jre-headless="$JAVA_DEBIAN_VERSION" \
-    unzip \
-    wget \
-  && rm -rf /var/lib/apt/lists/*
+    oracle-java7-installer \
+ && rm -rf /var/lib/apt/lists/* \
+ && rm -rf /var/cache/oracle-jdk7-installer
 
+# Define commonly used JAVA_HOME variable
+ENV JAVA_HOME /usr/lib/jvm/java-7-oracle
 
 ### Go
 # SCMs for "go get", gcc for cgo
-RUN apt-get update && apt-get install -y \
+RUN apt-get update
+ && apt-get install -y \
     ca-certificates \
     curl \
     gcc \
@@ -131,7 +136,8 @@ RUN apt-get update && apt-get install -y \
 
 ENV GOLANG_VERSION 1.4
 
-RUN curl -sSL https://golang.org/dl/go$GOLANG_VERSION.src.tar.gz | tar -v -C /usr/src -xz \
+RUN curl -sSL https://golang.org/dl/go$GOLANG_VERSION.src.tar.gz \
+  | tar -v -C /usr/src -xz \
  && cd /usr/src/go/src \
  && ./make.bash --no-clean 2>&1
 
@@ -154,7 +160,7 @@ ENV PYTHON_VERSION 2.7.9
 RUN set -x \
  && mkdir -p /usr/src/python \
  && curl -SL "https://www.python.org/ftp/python/$PYTHON_VERSION/Python-$PYTHON_VERSION.tar.xz" \
-   | tar -xJC /usr/src/python --strip-components=1 \
+  | tar -xJC /usr/src/python --strip-components=1 \
  && cd /usr/src/python \
  && ./configure --enable-shared \
  && make -j$(nproc) \
@@ -172,9 +178,10 @@ RUN set -x \
 ### CPPCheck
 ENV CPPCHECK_VERSION 1.61-1
 
-RUN apt-get update && apt-get install -y \
+RUN apt-get update \
+ && apt-get install -y \
     cppcheck=$CPPCHECK_VERSION \
-  && rm -rf /var/lib/apt/lists/*
+ && rm -rf /var/lib/apt/lists/*
 
 ### GoLint
 RUN go get github.com/golang/lint/golint
