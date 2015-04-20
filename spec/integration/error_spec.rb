@@ -22,8 +22,10 @@ describe LintTrap::Linter::Base do
       it 'raises an error with console output' do
         expect{|b| linter.lint([file], container, options, &b)}.to raise_error(
           LintTrap::Linter::LintError,
-          "Encountered error when running linter:\n"\
-          "ls: cannot access /home/spin_cycle/this-does-not-exist.rb: No such file or directory\n"
+          start_with(
+            "Encountered error when running linter:\n"\
+            "ls: cannot access /home/spin_cycle/this-does-not-exist.rb: No such file or directory\n"
+          )
         )
       end
     end
