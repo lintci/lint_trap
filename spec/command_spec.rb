@@ -7,9 +7,11 @@ describe LintTrap::Command do
 
   describe '#run' do
     it 'generates the expected output' do
-      command.run(container) do |io|
+      success = command.run(container) do |io|
         expect(io.read).to eq("     1\tlint\n")
       end
+
+      expect(success).to be_truthy
     end
   end
 

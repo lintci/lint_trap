@@ -18,7 +18,7 @@ module LintTrap
         Open3.popen2e(command(container)) do |_, stdout, thread|
           yield stdout
 
-          thread.join
+          thread.value.success?
         end
       end
     end

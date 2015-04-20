@@ -24,7 +24,7 @@ describe LintTrap::Linter::CheckStyle do
           ],
           files
         ).and_return(command)
-        expect(command).to receive(:run).with(container)
+        expect(command).to receive(:run).with(container).and_return(true)
 
         linter.lint(files, container, options)
       end
@@ -40,7 +40,7 @@ describe LintTrap::Linter::CheckStyle do
           ],
           files
         ).and_return(command)
-        expect(command).to receive(:run).with(container)
+        expect(command).to receive(:run).with(container).and_return(true)
 
         linter.lint(files, container, options)
       end

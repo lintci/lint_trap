@@ -3,6 +3,12 @@ require_relative '../command'
 
 module LintTrap
   module Linter
+    class LintError < StandardError
+      def initialize(error_output)
+        super("Encountered error when running linter:\n#{error_output}")
+      end
+    end
+
     # The base class for all linters. Provides a template for linter execution.
     class Base
       CONFIG_PATH = File.expand_path('../../../../config', __FILE__)
@@ -12,11 +18,15 @@ module LintTrap
 
         @container, @options = container, options
 
-        command(files).run(container) do |stdout|
-          parser(stdout).parse do |violation|
+        violations_found, remaining_output = false, ''
+        success = command(files).run(container) do |stdout|
+          remaining_output = parser(stdout).parse do |violation|
+            violations_found = true
             yield violation
           end
         end
+
+        raise LintError, remaining_output if !violations_found && !success
       end
 
       def name
@@ -59,7 +69,7 @@ module LintTrap
         container.config_path(path)
       end
 
-      def flags(options)
+      def flags
         raise NotImplementedError, 'Method flags must be implemented.'
       end
 

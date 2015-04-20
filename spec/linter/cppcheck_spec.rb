@@ -22,7 +22,7 @@ describe LintTrap::Linter::CPPCheck do
         ],
         files
       ).and_return(command)
-      expect(command).to receive(:run).with(container)
+      expect(command).to receive(:run).with(container).and_return(true)
 
       linter.lint(files, container, options)
     end

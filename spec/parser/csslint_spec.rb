@@ -11,7 +11,7 @@ describe LintTrap::Parser::CSSLint do
 
   describe '.parse' do
     it 'parses violations from io' do
-      expect{|b| parser.parse(&b)}.to yield_successive_args(
+      expect{|b| @result = parser.parse(&b)}.to yield_successive_args(
         file: 'bad.css',
         line: '2',
         column: '5',
@@ -20,6 +20,8 @@ describe LintTrap::Parser::CSSLint do
         severity: 'Error',
         message: 'Using width with border can sometimes make elements larger than you expect.'
       )
+
+      expect(@result).to eq("\n")
     end
   end
 end

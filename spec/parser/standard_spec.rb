@@ -16,7 +16,7 @@ describe LintTrap::Parser::Standard do
 
   describe '.parse' do
     it 'parses violations from io' do
-      expect{|b| parser.parse(&b)}.to yield_successive_args(
+      expect{|b| @result = parser.parse(&b)}.to yield_successive_args(
         {
           file: 'bad.java',
           line: '1',
@@ -72,6 +72,8 @@ describe LintTrap::Parser::Standard do
           message: '`border: 0;` is preferred over `border: none;`'
         }
       )
+
+      expect(@result).to eq('')
     end
   end
 end
