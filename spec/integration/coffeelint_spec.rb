@@ -11,15 +11,13 @@ describe LintTrap::Linter::CoffeeLint do
 
       it 'generates lint' do
         expect{|b| linter.lint([file], container, options, &b)}.to yield_successive_args(
-          {
-            file: file,
-            line: '1',
-            column: nil,
-            length: nil,
-            rule: 'camel_case_classes',
-            severity: 'error',
-            message: 'Class names should be camel cased'
-          }
+          file: file,
+          line: '1',
+          column: nil,
+          length: nil,
+          rule: 'camel_case_classes',
+          severity: 'error',
+          message: 'Class names should be camel cased'
         )
       end
     end

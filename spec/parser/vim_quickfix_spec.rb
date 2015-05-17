@@ -11,15 +11,13 @@ describe LintTrap::Parser::VimQuickfix do
   describe '#parse' do
     it 'parses violations from io' do
       expect{|b| @result = parser.parse(&b)}.to yield_successive_args(
-        {
-          file: 'bad.go',
-          line: '5',
-          column: '1',
-          length: nil,
-          rule: nil,
-          severity: nil,
-          message: 'exported function Main should have comment or be unexported'
-        }
+        file: 'bad.go',
+        line: '5',
+        column: '1',
+        length: nil,
+        rule: nil,
+        severity: nil,
+        message: 'exported function Main should have comment or be unexported'
       )
 
       expect(@result).to eq('')

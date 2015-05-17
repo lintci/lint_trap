@@ -11,15 +11,13 @@ describe LintTrap::Linter::SCSSLint do
 
       it 'generates lint' do
         expect{|b| linter.lint([file], container, options, &b)}.to yield_successive_args(
-          {
-            file: file,
-            line: '2',
-            column: '3',
-            length: '12',
-            rule: 'BorderZero',
-            severity: 'warning',
-            message: '`border: 0;` is preferred over `border: none;`'
-          }
+          file: file,
+          line: '2',
+          column: '3',
+          length: '12',
+          rule: 'BorderZero',
+          severity: 'warning',
+          message: '`border: 0;` is preferred over `border: none;`'
         )
       end
     end

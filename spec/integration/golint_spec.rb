@@ -11,15 +11,13 @@ describe LintTrap::Linter::GoLint do
 
       it 'generates lint' do
         expect{|b| linter.lint([file], container, options, &b)}.to yield_successive_args(
-          {
-            file: file,
-            line: '5',
-            column: '1',
-            length: nil,
-            rule: nil,
-            severity: nil,
-            message: 'exported function Main should have comment or be unexported'
-          }
+          file: file,
+          line: '5',
+          column: '1',
+          length: nil,
+          rule: nil,
+          severity: nil,
+          message: 'exported function Main should have comment or be unexported'
         )
       end
     end

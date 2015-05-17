@@ -11,15 +11,13 @@ describe LintTrap::Linter::CSSLint do
 
       it 'generates lint' do
         expect{|b| linter.lint([file], container, options, &b)}.to yield_successive_args(
-          {
-            file: file,
-            line: '2',
-            column: '5',
-            length: nil,
-            rule: nil,
-            severity: 'Warning',
-            message: 'Using width with border can sometimes make elements larger than you expect.'
-          }
+          file: file,
+          line: '2',
+          column: '5',
+          length: nil,
+          rule: nil,
+          severity: 'Warning',
+          message: 'Using width with border can sometimes make elements larger than you expect.'
         )
       end
     end

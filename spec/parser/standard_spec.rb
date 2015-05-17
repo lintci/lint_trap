@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe LintTrap::Parser::Standard do
   let(:parser_output) do
-    "bad.java:1:0::com.puppycrawl.tools.checkstyle.checks.javadoc.JavadocTypeCheck:error:"\
+    'bad.java:1:0::com.puppycrawl.tools.checkstyle.checks.javadoc.JavadocTypeCheck:error:'\
     "Missing a Javadoc comment.\n"\
     "bad.coffee:1:::camel_case_classes:error:Class names should be camel cased\n"\
     "bad.js:2:13::W030:warning:Expected an assignment or function call and instead saw an expression.\n"\

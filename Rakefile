@@ -1,11 +1,11 @@
-require "bundler/gem_tasks"
-require "rspec/core/rake_task"
+require 'bundler/gem_tasks'
+require 'rspec/core/rake_task'
 
 $stdout.sync = true
 
 RSpec::Core::RakeTask.new(:spec)
 
-task :default => :spec
+task default: :spec
 
 task :credentials do
   require 'fileutils'
@@ -25,7 +25,6 @@ namespace :docker do
     IMAGE_NAME = 'lintci/spin_cycle'
 
     BuildError = Class.new(StandardError)
-
 
     def tag
       run("docker tag -f #{image_sha} #{image_latest}")
@@ -68,7 +67,7 @@ namespace :docker do
       puts command
       system(command)
 
-      raise BuildError, 'There was a problem executing the command.' unless $? == 0
+      raise BuildError, 'There was a problem executing the command.' unless $CHILD_STATUS == 0
     end
 
     def image_sha
