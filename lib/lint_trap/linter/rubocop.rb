@@ -10,11 +10,15 @@ module LintTrap
         super(Language::Ruby)
       end
 
+      def version
+        '0.31.0'
+      end
+
     private
 
-      def flags
+      def flags(container, options)
         [
-          '--require', config_path(FORMATTER),
+          '--require', container.config_path(FORMATTER),
           '--format', 'LintTrap::Rubocop::Formatter',
           '--no-color'
         ].tap do |flags|

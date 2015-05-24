@@ -8,6 +8,9 @@ module LintTrap
         super('no/image', 'local')
       end
 
+      def pull
+      end
+
       def wrap(command)
         command
       end

@@ -8,9 +8,13 @@ module LintTrap
         super(Language::Python)
       end
 
+      def version
+        '1.3.1-3'
+      end
+
     private
 
-      def flags
+      def flags(_container, options)
         [
           '-r', 'no',
           '--msg-template', '"{abspath}:{line}:{column}::{symbol}:{category}:{msg}"'

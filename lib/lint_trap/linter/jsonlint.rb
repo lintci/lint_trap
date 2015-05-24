@@ -8,13 +8,17 @@ module LintTrap
         super(Language::JSON)
       end
 
+      def version
+        '0.0.4'
+      end
+
     private
 
-      def command_name
+      def command_name(_container)
         'durable-json-lint'
       end
 
-      def flags
+      def flags(_container, _options)
         ['--format', '{{file}}:{{line}}:{{column}}:::error:{{{description}}}']
       end
     end

@@ -7,4 +7,5 @@ describe LintTrap::Language::CPP do
 
   its(:name){is_expected.to eq('C++')}
   its(:linters){is_expected.to eq([LintTrap::Linter::CPPCheck.new])}
+  it{is_expected.to be_known}
 end

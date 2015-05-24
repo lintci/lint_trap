@@ -9,9 +9,13 @@ module LintTrap
         super(Language::CSS)
       end
 
+      def version
+        '0.10.0'
+      end
+
     private
 
-      def flags
+      def flags(_container, options)
         [
           '--format=compact'
         ].tap do |flags|
@@ -19,7 +23,7 @@ module LintTrap
         end
       end
 
-      def parser(stdout)
+      def parser(stdout, container)
         LintTrap::Parser::CSSLint.new(stdout, container)
       end
     end

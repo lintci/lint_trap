@@ -7,4 +7,5 @@ describe LintTrap::Language::Go do
 
   its(:name){is_expected.to eq('Go')}
   its(:linters){is_expected.to eq([LintTrap::Linter::GoLint.new])}
+  it{is_expected.to be_known}
 end

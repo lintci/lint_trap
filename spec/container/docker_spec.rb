@@ -1,15 +1,35 @@
 require 'spec_helper'
 
 describe LintTrap::Container::Docker do
-  subject(:container){described_class.new('lintci/spin_cycle:latest', '/local/path')}
+  let(:image){LintTrap::Linter::RuboCop.new.image_version}
+  subject(:container){described_class.new(image, '/local/path')}
+
+  describe '#pull' do
+    context 'when image exists' do
+      it 'completes successfully' do
+        expect(container.pull).to be_truthy
+      end
+    end
+
+    context 'when image does not exist' do
+      subject(:container){described_class.new('lintci/missing', '/local/path')}
+
+      it 'raises an error' do
+        expect{container.pull}.to raise_error(
+          LintTrap::Container::Base::ImagePullError,
+          /An error occurred while running `docker pull lintci\/missing`. The output was:\n/
+        )
+      end
+    end
+  end
 
   describe '#wrap' do
     it 'wraps the command passed in with a call to docker' do
       expect(container.wrap('ls')).to eq(
-        'docker run --privileged=false '\
-        "-v #{described_class::LOCAL_CONFIG_PATH}:/opt/lint_trap/config "\
-        '-v /local/path:/home/spin_cycle '\
-        '--workdir=/home/spin_cycle --user=spin_cycle lintci/spin_cycle:latest ls'
+        'docker run --net="none" --privileged=false '\
+        "-v #{described_class::LOCAL_CONFIG_PATH}:/config "\
+        '-v /local/path:/src '\
+        "--workdir=/src --user=lint_trap #{image} ls"
       )
     end
   end
@@ -22,13 +42,13 @@ describe LintTrap::Container::Docker do
 
   describe '#container_path' do
     it 'returns the absolute path of the file in the container' do
-      expect(container.container_path('/local/path/bad.file')).to eq('/home/spin_cycle/bad.file')
+      expect(container.container_path('/local/path/bad.file')).to eq('/src/bad.file')
     end
   end
 
   describe '#local_path' do
     it 'returns the absolute path of the file outside the container' do
-      expect(container.local_path('/home/spin_cycle/bad.file')).to eq('/local/path/bad.file')
+      expect(container.local_path('/src/bad.file')).to eq('/local/path/bad.file')
     end
   end
 end

@@ -10,6 +10,9 @@ describe LintTrap::Linter::CPPCheck do
   it_behaves_like 'linter'
 
   its(:languages){is_expected.to eq([LintTrap::Language::CPP.new])}
+  its(:version){is_expected.to eq('1.67-1')}
+  its(:image){is_expected.to eq('lintci/cppcheck')}
+  its(:image_version){is_expected.to eq('lintci/cppcheck:1.67-1')}
 
   describe '#lint' do
     it 'runs the lint command with the correct arguments' do

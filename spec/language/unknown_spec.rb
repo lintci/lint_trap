@@ -16,4 +16,5 @@ describe LintTrap::Language::Unknown do
   end
 
   its(:linters){is_expected.to eq([LintTrap::Linter::Unknown.new])}
+  it{is_expected.to_not be_known}
 end

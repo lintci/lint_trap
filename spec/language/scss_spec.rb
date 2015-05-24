@@ -7,4 +7,5 @@ describe LintTrap::Language::SCSS do
 
   its(:name){is_expected.to eq('SCSS')}
   its(:linters){is_expected.to eq([LintTrap::Linter::SCSSLint.new])}
+  it{is_expected.to be_known}
 end

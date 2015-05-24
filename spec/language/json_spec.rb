@@ -7,4 +7,5 @@ describe LintTrap::Language::JSON do
 
   its(:name){is_expected.to eq('JSON')}
   its(:linters){is_expected.to eq([LintTrap::Linter::JSONLint.new])}
+  it{is_expected.to be_known}
 end

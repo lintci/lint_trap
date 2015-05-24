@@ -10,6 +10,9 @@ describe LintTrap::Linter::SCSSLint do
   it_behaves_like 'linter'
 
   its(:languages){is_expected.to eq([LintTrap::Language::SCSS.new])}
+  its(:version){is_expected.to eq('0.38.0')}
+  its(:image){is_expected.to eq('lintci/scsslint')}
+  its(:image_version){is_expected.to eq('lintci/scsslint:0.38.0')}
 
   describe '#lint' do
     context 'when config is provided' do

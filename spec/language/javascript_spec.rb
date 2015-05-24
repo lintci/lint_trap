@@ -7,4 +7,5 @@ describe LintTrap::Language::JavaScript do
 
   its(:name){is_expected.to eq('JavaScript')}
   its(:linters){is_expected.to eq([LintTrap::Linter::JSHint.new])}
+  it{is_expected.to be_known}
 end

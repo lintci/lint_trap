@@ -10,6 +10,9 @@ describe LintTrap::Linter::Unknown do
   it_behaves_like 'linter'
 
   its(:languages){is_expected.to eq([LintTrap::Language::Unknown.new])}
+  its(:version){is_expected.to eq(LintTrap::VERSION)}
+  its(:image){is_expected.to eq('lintci/unknown')}
+  its(:image_version){is_expected.to eq('lintci/unknown:' + LintTrap::VERSION)}
 
   describe '#lint' do
     it 'is a noop' do

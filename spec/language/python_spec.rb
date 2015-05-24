@@ -7,4 +7,5 @@ describe LintTrap::Language::Python do
 
   its(:name){is_expected.to eq('Python')}
   its(:linters){is_expected.to eq([LintTrap::Linter::PyLint.new])}
+  it{is_expected.to be_known}
 end

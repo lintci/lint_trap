@@ -10,6 +10,9 @@ describe LintTrap::Linter::PyLint do
   it_behaves_like 'linter'
 
   its(:languages){is_expected.to eq([LintTrap::Language::Python.new])}
+  its(:version){is_expected.to eq('1.3.1-3')}
+  its(:image){is_expected.to eq('lintci/pylint')}
+  its(:image_version){is_expected.to eq('lintci/pylint:1.3.1-3')}
 
   describe '#lint' do
     context 'when config is provided' do

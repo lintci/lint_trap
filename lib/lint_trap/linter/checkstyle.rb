@@ -4,23 +4,30 @@ module LintTrap
   module Linter
     # Encapsulates logic specific to checkstyle command line tool.
     class CheckStyle < Base
-      JAR = 'checkstyle/checkstyle_logger-all.jar'
       CHECKS_XML = 'checkstyle/sun_checks.xml'
 
       def languages
         super(Language::Java)
       end
 
+      def version
+        '6.6'
+      end
+
+      def jar
+        "checkstyle/checkstyle_logger-#{version}-all.jar"
+      end
+
     private
 
-      def command_name
+      def command_name(_container)
         'java'
       end
 
-      def flags
+      def flags(container, options)
         [
-          '-jar', config_path(JAR),
-          '-c', options[:config] || config_path(CHECKS_XML)
+          '-jar', container.config_path(jar),
+          '-c', options[:config] || container.config_path(CHECKS_XML)
         ]
       end
     end

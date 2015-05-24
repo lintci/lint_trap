@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 describe LintTrap::Linter::CheckStyle do
-  let(:container){LintTrap::Container::Docker.new('lintci/spin_cycle:latest', fixture_path)}
+  let(:container){LintTrap::Container::Docker.new(linter.image_version, fixture_path)}
   let(:options){{}}
   subject(:linter){described_class.new}
 

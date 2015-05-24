@@ -10,6 +10,10 @@ describe LintTrap::Linter::CheckStyle do
   it_behaves_like 'linter'
 
   its(:languages){is_expected.to eq([LintTrap::Language::Java.new])}
+  its(:version){is_expected.to eq('6.6')}
+  its(:image){is_expected.to eq('lintci/checkstyle')}
+  its(:image_version){is_expected.to eq('lintci/checkstyle:6.6')}
+  its(:jar){is_expected.to eq('checkstyle/checkstyle_logger-6.6-all.jar')}
 
   describe '#lint' do
     context 'when config is provided' do
@@ -19,7 +23,7 @@ describe LintTrap::Linter::CheckStyle do
         expect(LintTrap::Command).to receive(:new).with(
           'java',
           [
-            '-jar', container.config_path(described_class::JAR),
+            '-jar', container.config_path(linter.jar),
             '-c', options[:config]
           ],
           files
@@ -35,7 +39,7 @@ describe LintTrap::Linter::CheckStyle do
         expect(LintTrap::Command).to receive(:new).with(
           'java',
           [
-            '-jar', container.config_path(described_class::JAR),
+            '-jar', container.config_path(linter.jar),
             '-c', container.config_path(described_class::CHECKS_XML)
           ],
           files
