@@ -26,7 +26,7 @@ describe LintTrap::Container::Docker do
   describe '#wrap' do
     it 'wraps the command passed in with a call to docker' do
       expect(container.wrap('ls')).to eq(
-        'docker run --rm --net="none" --privileged=false '\
+        'docker run --net="none" --privileged=false '\
         "-v #{described_class::LOCAL_CONFIG_PATH}:/config "\
         '-v /local/path:/src '\
         "--workdir=/src --user=lint_trap #{image} ls"

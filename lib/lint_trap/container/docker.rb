@@ -46,7 +46,6 @@ module LintTrap
         [
           # '-m', '50m', # memory
           # '-c', '1', # number of cpus
-          '--rm',
           '--net="none"',
           '--privileged=false',
           '-v', "#{LOCAL_CONFIG_PATH}:#{CONFIG_PATH}",
