@@ -24,13 +24,28 @@ describe LintTrap::Container::Docker do
   end
 
   describe '#wrap' do
-    it 'wraps the command passed in with a call to docker' do
-      expect(container.wrap('ls')).to eq(
-        'docker run --net="none" --privileged=false '\
-        "-v #{described_class::LOCAL_CONFIG_PATH}:/config "\
-        '-v /local/path:/src '\
-        "--workdir=/src --user=lint_trap #{image} ls"
-      )
+    context 'with remove_container option' do
+      it 'wraps the command passed in with a call to docker' do
+        expect(container.wrap('ls')).to eq(
+          'docker run --rm --net="none" --privileged=false '\
+          "-v #{described_class::LOCAL_CONFIG_PATH}:/config "\
+          '-v /local/path:/src '\
+          "--workdir=/src --user=lint_trap #{image} ls"
+        )
+      end
+    end
+
+    context 'without remove_container option' do
+      subject(:container){described_class.new(image, '/local/path', remove_container: false)}
+
+      it 'wraps the command passed in with a call to docker' do
+        expect(container.wrap('ls')).to eq(
+          'docker run --net="none" --privileged=false '\
+          "-v #{described_class::LOCAL_CONFIG_PATH}:/config "\
+          '-v /local/path:/src '\
+          "--workdir=/src --user=lint_trap #{image} ls"
+        )
+      end
     end
   end
 

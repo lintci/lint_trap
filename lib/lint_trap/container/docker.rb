@@ -42,8 +42,12 @@ module LintTrap
 
     private
 
+      def default_options
+        {remove_container: true}
+      end
+
       def flags
-        [
+        flags = [
           # '-m', '50m', # memory
           # '-c', '1', # number of cpus
           '--net="none"',
@@ -52,7 +56,11 @@ module LintTrap
           '-v', "#{repo_path}:#{CODE_PATH}",
           "--workdir=#{CODE_PATH}",
           '--user=lint_trap'
-        ].join(' ')
+        ]
+
+        flags.unshift('--rm') if options[:remove_container]
+
+        flags.join(' ')
       end
     end
   end
