@@ -7,4 +7,5 @@ describe LintTrap::Language::CoffeeScript do
 
   its(:name){is_expected.to eq('CoffeeScript')}
   its(:linters){is_expected.to eq([LintTrap::Linter::CoffeeLint.new])}
+  it{is_expected.to be_known}
 end

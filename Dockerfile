@@ -121,7 +121,7 @@ ENV JAVA_HOME /usr/lib/jvm/java-7-oracle
 
 ### Go
 # SCMs for "go get", gcc for cgo
-RUN apt-get update
+RUN apt-get update \
  && apt-get install -y \
     ca-certificates \
     curl \

@@ -1,8 +1,27 @@
 require 'spec_helper'
 
 describe LintTrap::Linter do
+  describe '.all' do
+    subject(:all_linters){described_class.all}
+
+    it do
+      is_expected.to match([
+        be_a(described_class::CheckStyle),
+        be_a(described_class::CoffeeLint),
+        be_a(described_class::CPPCheck),
+        be_a(described_class::CSSLint),
+        be_a(described_class::GoLint),
+        be_a(described_class::JSHint),
+        be_a(described_class::JSONLint),
+        be_a(described_class::PyLint),
+        be_a(described_class::RuboCop),
+        be_a(described_class::SCSSLint)
+      ])
+    end
+  end
+
   describe '.find' do
-    subject(:language){described_class.find(linter_name)}
+    subject(:linter){described_class.find(linter_name)}
 
     context 'when given CheckStyle' do
       let(:linter_name){'CheckStyle'}

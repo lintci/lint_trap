@@ -40,7 +40,7 @@ module LintTrap
       end
 
       def violation_regex
-        raise NotImplementedError, "Subclass #{self.class.name} must implement violation_regex."
+        raise NotImplementedError, "Must implement violation_regex."
       end
 
       def standardize(violation)

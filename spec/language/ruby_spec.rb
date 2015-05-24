@@ -7,4 +7,5 @@ describe LintTrap::Language::Ruby do
 
   its(:name){is_expected.to eq('Ruby')}
   its(:linters){is_expected.to eq([LintTrap::Linter::RuboCop.new])}
+  it{is_expected.to be_known}
 end

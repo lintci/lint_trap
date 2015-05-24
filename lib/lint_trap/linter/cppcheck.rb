@@ -8,9 +8,13 @@ module LintTrap
         super(Language::CPP)
       end
 
+      def version
+        '1.67-1'
+      end
+
     private
 
-      def flags
+      def flags(_container, _options)
         [
           '--enable=all',
           '--error-exitcode=1',

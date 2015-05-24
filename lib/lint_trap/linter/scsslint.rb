@@ -10,11 +10,15 @@ module LintTrap
         super(Language::SCSS)
       end
 
-      def command_name
-        config_path(COMMAND)
+      def version
+        '0.38.0'
       end
 
-      def flags
+      def command_name(container)
+        container.config_path(COMMAND)
+      end
+
+      def flags(_container, options)
         [
           '--format=LintTrap'
         ].tap do |flags|

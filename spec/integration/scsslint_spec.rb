@@ -1,9 +1,17 @@
 require 'spec_helper'
 
 describe LintTrap::Linter::SCSSLint do
-  let(:container){LintTrap::Container::Docker.new('lintci/spin_cycle:latest', fixture_path)}
+  let(:container){LintTrap::Container::Docker.new(linter.image_version, fixture_path)}
   let(:options){{}}
   subject(:linter){described_class.new}
+
+  describe '#version' do
+    subject(:dockerfile){Dockerfile.new(linter.name)}
+
+    it 'matches the linters version' do
+      expect(dockerfile.include_env?('SCSSLINT_VERSION', linter.version)).to be_truthy
+    end
+  end
 
   describe '#lint' do
     context 'when linting a bad file' do
@@ -17,7 +25,7 @@ describe LintTrap::Linter::SCSSLint do
           length: '12',
           rule: 'BorderZero',
           severity: 'warning',
-          message: '`border: 0;` is preferred over `border: none;`'
+          message: '`border: 0 is preferred over `border: none`'
         )
       end
     end

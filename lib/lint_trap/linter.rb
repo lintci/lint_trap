@@ -26,6 +26,10 @@ module LintTrap
         linters[name]
       end
 
+      def all
+        linters.values
+      end
+
     protected
 
       attr_reader :linters

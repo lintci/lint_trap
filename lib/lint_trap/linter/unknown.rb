@@ -14,6 +14,10 @@ module LintTrap
         super(Language::Unknown)
       end
 
+      def version
+        LintTrap::VERSION
+      end
+
       def known?
         false
       end

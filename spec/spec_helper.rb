@@ -17,6 +17,7 @@ require 'rspec/its'
 require 'lint_trap'
 require 'pry'
 require_relative 'support/fixture_file_helper'
+require_relative 'support/dockerfile'
 require_relative 'support/examples/language'
 require_relative 'support/examples/linter'
 

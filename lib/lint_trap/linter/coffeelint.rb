@@ -10,11 +10,15 @@ module LintTrap
         super(Language::CoffeeScript)
       end
 
+      def version
+        '1.9.7'
+      end
+
     private
 
-      def flags
+      def flags(container, options)
         [
-          "--reporter=#{config_path(REPORTER)}",
+          "--reporter=#{container.config_path(REPORTER)}",
           '--nocolor'
         ].tap do |flags|
           flags.concat(["--file=#{options[:config]}"]) if options[:config]

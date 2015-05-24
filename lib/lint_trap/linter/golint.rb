@@ -9,13 +9,17 @@ module LintTrap
         super(Language::Go)
       end
 
+      def version
+        LintTrap::VERSION
+      end
+
     private
 
-      def flags
+      def flags(_container, _options)
         []
       end
 
-      def parser(stdout)
+      def parser(stdout, container)
         LintTrap::Parser::VimQuickfix.new(stdout, container)
       end
     end

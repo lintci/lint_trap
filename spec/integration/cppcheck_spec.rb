@@ -1,9 +1,17 @@
 require 'spec_helper'
 
 describe LintTrap::Linter::CPPCheck do
-  let(:container){LintTrap::Container::Docker.new('lintci/spin_cycle:latest', fixture_path)}
+  let(:container){LintTrap::Container::Docker.new(linter.image_version, fixture_path)}
   let(:options){{}}
   subject(:linter){described_class.new}
+
+  describe '#version' do
+    subject(:dockerfile){Dockerfile.new(linter.name)}
+
+    it 'matches the linters version' do
+      expect(dockerfile.include_env?('CPPCHECK_VERSION', linter.version)).to be_truthy
+    end
+  end
 
   describe '#lint' do
     context 'when linting a bad file' do

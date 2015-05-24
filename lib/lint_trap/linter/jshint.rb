@@ -10,11 +10,15 @@ module LintTrap
         super(Language::JavaScript)
       end
 
+      def version
+        '2.5.11'
+      end
+
     private
 
-      def flags
+      def flags(container, options)
         [
-          '--reporter', config_path(FORMATTER)
+          '--reporter', container.config_path(FORMATTER)
         ].tap do |flags|
           flags.concat(['--config', options[:config]]) if options[:config]
         end

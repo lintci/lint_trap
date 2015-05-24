@@ -10,6 +10,9 @@ describe LintTrap::Linter::CoffeeLint do
   it_behaves_like 'linter'
 
   its(:languages){is_expected.to eq([LintTrap::Language::CoffeeScript.new])}
+  its(:version){is_expected.to eq('1.9.7')}
+  its(:image){is_expected.to eq('lintci/coffeelint')}
+  its(:image_version){is_expected.to eq('lintci/coffeelint:1.9.7')}
 
   describe '#lint' do
     context 'when config is provided' do

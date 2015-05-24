@@ -10,6 +10,9 @@ describe LintTrap::Linter::JSONLint do
   it_behaves_like 'linter'
 
   its(:languages){is_expected.to eq([LintTrap::Language::JSON.new])}
+  its(:version){is_expected.to eq('0.0.4')}
+  its(:image){is_expected.to eq('lintci/jsonlint')}
+  its(:image_version){is_expected.to eq('lintci/jsonlint:0.0.4')}
 
   describe '#lint' do
     it 'runs the lint command with the correct arguments' do

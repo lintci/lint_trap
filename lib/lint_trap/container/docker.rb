@@ -1,12 +1,24 @@
 require_relative 'base'
 require 'pathname'
+require 'open3'
 
 module LintTrap
   module Container
     # Acts like a container, without actually requiring a container.
     class Docker < Base
-      CONFIG_PATH = Pathname.new('/opt/lint_trap/config')
-      CODE_PATH = Pathname.new('/home/spin_cycle')
+      CONFIG_PATH = Pathname.new('/config')
+      CODE_PATH = Pathname.new('/src')
+
+      def pull
+        command = "docker pull #{image}"
+        Open3.popen2e(command) do |_, stdout, thread|
+          if thread.value.success?
+            true
+          else
+            raise ImagePullError.new(command, stdout.read)
+          end
+        end
+      end
 
       def wrap(command)
         "docker run #{flags} #{image} #{command}"
@@ -34,11 +46,13 @@ module LintTrap
         [
           # '-m', '50m', # memory
           # '-c', '1', # number of cpus
+          '--rm',
+          '--net="none"',
           '--privileged=false',
           '-v', "#{LOCAL_CONFIG_PATH}:#{CONFIG_PATH}",
           '-v', "#{repo_path}:#{CODE_PATH}",
           "--workdir=#{CODE_PATH}",
-          '--user=spin_cycle'
+          '--user=lint_trap'
         ].join(' ')
       end
     end

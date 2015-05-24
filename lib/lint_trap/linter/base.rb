@@ -1,13 +1,10 @@
 require_relative '../parser/standard'
 require_relative '../command'
+require_relative '../execution_error'
 
 module LintTrap
   module Linter
-    class LintError < StandardError
-      def initialize(error_output)
-        super("Encountered error when running linter:\n#{error_output}")
-      end
-    end
+    LintError = Class.new(ExecutionError)
 
     # The base class for all linters. Provides a template for linter execution.
     class Base
@@ -16,21 +13,33 @@ module LintTrap
       def lint(files, container, options)
         return unless known?
 
-        @container, @options = container, options
-
         violations_found, remaining_output = false, ''
-        success = command(files).run(container) do |stdout|
-          remaining_output = parser(stdout).parse do |violation|
+        success = command(files, container, options).run(container) do |stdout|
+          remaining_output = parser(stdout, container).parse do |violation|
             violations_found = true
             yield violation
           end
         end
 
-        raise LintError, remaining_output if !violations_found && !success
+        if !violations_found && !success
+          raise LintError.new(command(files, container, options).to_s(container), remaining_output)
+        end
       end
 
       def name
         self.class.name.split('::').last
+      end
+
+      def version
+        raise NotImplementedError, 'Must implement version.'
+      end
+
+      def image
+        "lintci/#{name.downcase}"
+      end
+
+      def image_version
+        "#{image}:#{version}"
       end
 
       def languages(*classes)
@@ -51,29 +60,21 @@ module LintTrap
         "<#{name}>"
       end
 
-    protected
-
-      attr_reader :container, :options
-
     private
 
-      def command(files)
-        Command.new(command_name, flags, files)
+      def command(files, container, options)
+        Command.new(command_name(container), flags(container, options), files)
       end
 
-      def parser(stdout)
+      def parser(stdout, container)
         LintTrap::Parser::Standard.new(stdout, container)
       end
 
-      def config_path(path)
-        container.config_path(path)
+      def flags(_container, _options)
+        raise NotImplementedError, 'Must implement flags.'
       end
 
-      def flags
-        raise NotImplementedError, 'Method flags must be implemented.'
-      end
-
-      def command_name
+      def command_name(_container)
         name.downcase
       end
     end

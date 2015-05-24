@@ -10,6 +10,9 @@ describe LintTrap::Linter::RuboCop do
   it_behaves_like 'linter'
 
   its(:languages){is_expected.to eq([LintTrap::Language::Ruby.new])}
+  its(:version){is_expected.to eq('0.31.0')}
+  its(:image){is_expected.to eq('lintci/rubocop')}
+  its(:image_version){is_expected.to eq('lintci/rubocop:0.31.0')}
 
   describe '#lint' do
     context 'when config is provided' do

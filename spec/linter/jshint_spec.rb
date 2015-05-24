@@ -10,6 +10,9 @@ describe LintTrap::Linter::JSHint do
   it_behaves_like 'linter'
 
   its(:languages){is_expected.to eq([LintTrap::Language::JavaScript.new])}
+  its(:version){is_expected.to eq('2.5.11')}
+  its(:image){is_expected.to eq('lintci/jshint')}
+  its(:image_version){is_expected.to eq('lintci/jshint:2.5.11')}
 
   describe '#lint' do
     context 'when config is provided' do

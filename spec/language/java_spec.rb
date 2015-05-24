@@ -7,4 +7,5 @@ describe LintTrap::Language::Java do
 
   its(:name){is_expected.to eq('Java')}
   its(:linters){is_expected.to eq([LintTrap::Linter::CheckStyle.new])}
+  it{is_expected.to be_known}
 end
