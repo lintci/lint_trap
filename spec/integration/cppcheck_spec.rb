@@ -26,7 +26,7 @@ describe LintTrap::Linter::CPPCheck do
             length: nil,
             rule: 'unassignedVariable',
             severity: 'style',
-            message: "Variable 'p' is not assigned a value."
+            message: start_with("Variable 'p' is not assigned a value.") # Other text sometimes gets added
           }, {
             file: file,
             line: '4',
@@ -34,7 +34,7 @@ describe LintTrap::Linter::CPPCheck do
             length: nil,
             rule: 'uninitvar',
             severity: 'error',
-            message: 'Uninitialized variable: p'
+            message: start_with('Uninitialized variable: p')
           }, {
             file: file,
             line: '1',
@@ -42,7 +42,7 @@ describe LintTrap::Linter::CPPCheck do
             length: nil,
             rule: 'unusedFunction',
             severity: 'style',
-            message: "The function 'f' is never used."
+            message: start_with("The function 'f' is never used.")
           }
         )
       end
