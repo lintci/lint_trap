@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 describe LintTrap::Linter::GoLint do
-  let(:container){LintTrap::Container::Docker.new(linter.image_version, fixture_path)}
+  let(:container){LintTrap::Container::Docker.new(linter.image_version, fixture_path, remove_container: ENV['CI'].nil?)}
   let(:options){{}}
   subject(:linter){described_class.new}
 

@@ -8,9 +8,10 @@ module LintTrap
 
       LOCAL_CONFIG_PATH = Pathname.new(File.expand_path('../../../../config', __FILE__))
 
-      def initialize(image, repo_path)
+      def initialize(image, repo_path, options = {})
         @image = image
         @repo_path = Pathname.new(repo_path)
+        @options = default_options.merge(options)
       end
 
       def pull
@@ -31,7 +32,13 @@ module LintTrap
 
     protected
 
-      attr_reader :image, :repo_path
+      attr_reader :image, :repo_path, :options
+
+    private
+
+      def default_options
+        {}
+      end
     end
   end
 end

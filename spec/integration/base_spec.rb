@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe LintTrap::Linter::Base do
   let(:image){LintTrap::Linter::RuboCop.new.image_version}
-  let(:container){LintTrap::Container::Docker.new(image, fixture_path)}
+  let(:container){LintTrap::Container::Docker.new(image, fixture_path, remove_container: ENV['CI'].nil?)}
   let(:options){{}}
   subject(:linter) do
     ErrorLinter = Class.new(described_class) do
