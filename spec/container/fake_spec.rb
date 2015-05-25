@@ -3,6 +3,8 @@ require 'spec_helper'
 describe LintTrap::Container::Fake do
   subject(:container){described_class.new}
 
+  its(:image){is_expected.to eq('no/image')}
+
   describe '#wrap' do
     it 'returns the command passed in' do
       expect(container.wrap('ls')).to eq('ls')

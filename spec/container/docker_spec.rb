@@ -4,6 +4,8 @@ describe LintTrap::Container::Docker do
   let(:image){LintTrap::Linter::RuboCop.new.image_version}
   subject(:container){described_class.new(image, '/local/path')}
 
+  its(:image){is_expected.to eq(image)}
+
   describe '#pull' do
     context 'when image exists' do
       it 'completes successfully' do

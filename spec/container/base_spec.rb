@@ -5,6 +5,8 @@ describe LintTrap::Container::Base do
     Class.new(described_class).new('lintci/rubocop', '/src')
   end
 
+  its(:image){is_expected.to eq('lintci/rubocop')}
+
   describe '#pull' do
     it 'raises an error if not overriden' do
       expect{container.pull}.to raise_error(NotImplementedError, 'Must implement pull.')
