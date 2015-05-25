@@ -1,18 +1,14 @@
 module LintTrap
   module Parser
+    # Interface for parsers
     class Base
-      def initialize(io, container)
-        @io = io
-        @container = container
+      def parse(_io, _container)
+        raise NotImplementedError, 'Must implement parse.'
       end
 
-      def parse
-        raise NotImplementedError, "Must implement parse."
+      def name
+        self.class.name.split('::').last
       end
-
-    protected
-
-      attr_reader :container, :io
     end
   end
 end

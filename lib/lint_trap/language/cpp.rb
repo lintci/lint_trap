@@ -8,10 +8,6 @@ module LintTrap
       def name
         'C++'
       end
-
-      def linters
-        super(Linter::CPPCheck)
-      end
     end
   end
 end

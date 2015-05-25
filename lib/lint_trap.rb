@@ -1,5 +1,6 @@
 require_relative 'lint_trap/version'
 require_relative 'lint_trap/language'
+require_relative 'lint_trap/parser'
 require_relative 'lint_trap/linter'
 require_relative 'lint_trap/container/docker'
 require_relative 'lint_trap/container/fake'

@@ -2,16 +2,18 @@ module LintTrap
   module Language
     # Interface for languages
     class Base
+      attr_reader :linters
+
+      def initialize
+        @linters = []
+      end
+
       def name
         self.class.name.split('::').last
       end
 
-      def linters(*classes)
-        classes.map(&:new)
-      end
-
-      def known?
-        true
+      def add_linter(linter)
+        @linters << linter
       end
 
       def ==(other)

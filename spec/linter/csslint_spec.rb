@@ -4,7 +4,7 @@ describe LintTrap::Linter::CSSLint do
   let(:container){LintTrap::Container::Fake.new}
   let(:options){{}}
   let(:files){%w(good.css bad.css)}
-  subject(:linter){described_class.new}
+  subject(:linter){LintTrap::Linter.find('CSSLint')}
   let(:command){instance_double(LintTrap::Command)}
 
   it_behaves_like 'linter'

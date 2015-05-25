@@ -4,10 +4,6 @@ module LintTrap
   module Linter
     # Encapsulates logic specific to durable-json-lint command line tool.
     class JSONLint < Base
-      def languages
-        super(Language::JSON)
-      end
-
       def version
         '0.0.4'
       end

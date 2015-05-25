@@ -4,10 +4,6 @@ module LintTrap
   module Linter
     # Encapsulates logic specific to pylint command line tool.
     class PyLint < Base
-      def languages
-        super(Language::Python)
-      end
-
       def version
         '1.3.1-3'
       end

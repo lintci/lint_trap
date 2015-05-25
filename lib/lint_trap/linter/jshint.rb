@@ -6,10 +6,6 @@ module LintTrap
     class JSHint < Base
       FORMATTER = 'jshint/formatter.js'
 
-      def languages
-        super(Language::JavaScript)
-      end
-
       def version
         '2.5.11'
       end

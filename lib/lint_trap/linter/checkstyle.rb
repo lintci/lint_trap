@@ -6,10 +6,6 @@ module LintTrap
     class CheckStyle < Base
       CHECKS_XML = 'checkstyle/sun_checks.xml'
 
-      def languages
-        super(Language::Java)
-      end
-
       def version
         '6.6'
       end

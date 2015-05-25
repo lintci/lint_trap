@@ -4,11 +4,11 @@ module LintTrap
   module Parser
     # Handles parsing line by line with regex
     class Line < Base
-      def parse
+      def parse(io, container)
         output = ''
 
         io.each_line do |line|
-          if (violation = parse_line(line))
+          if (violation = parse_line(line, container))
             yield violation
           else
             output << line
@@ -20,7 +20,7 @@ module LintTrap
 
     private
 
-      def parse_line(line)
+      def parse_line(line, container)
         return unless (match = line.match(violation_regex))
 
         violation = {}
@@ -32,7 +32,7 @@ module LintTrap
           end
         end
 
-        standardize(violation)
+        standardize(violation, container)
       end
 
       def violation_fields
@@ -40,10 +40,10 @@ module LintTrap
       end
 
       def violation_regex
-        raise NotImplementedError, "Must implement violation_regex."
+        raise NotImplementedError, 'Must implement violation_regex.'
       end
 
-      def standardize(violation)
+      def standardize(violation, container)
         violation[:file] = container.local_path(violation[:file])
 
         violation

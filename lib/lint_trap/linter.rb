@@ -1,3 +1,4 @@
+require_relative 'registerable'
 require_relative 'linter/checkstyle'
 require_relative 'linter/coffeelint'
 require_relative 'linter/cppcheck'
@@ -11,39 +12,32 @@ require_relative 'linter/scsslint'
 require_relative 'linter/unknown'
 
 module LintTrap
-  # Linter lookup
+  # Linter registry
   module Linter
-    @linters = Hash.new{|h, v| h[v] = Unknown.new(v)}
+    extend Registerable
 
     class << self
-      def register(linter_class)
-        linter = linter_class.new
+      def register(linter_class, languages:, parser: nil)
+        linter = super(linter_class)
 
-        linters[linter.name] = linter
+        Array(languages).each do |language|
+          linter.add_language(Language.find(language))
+        end
+
+        linter.parser = Parser.find(parser)
       end
-
-      def find(name)
-        linters[name]
-      end
-
-      def all
-        linters.values
-      end
-
-    protected
-
-      attr_reader :linters
     end
 
-    register CheckStyle
-    register CoffeeLint
-    register CPPCheck
-    register CSSLint
-    register GoLint
-    register JSHint
-    register JSONLint
-    register PyLint
-    register RuboCop
-    register SCSSLint
+    register CheckStyle, languages: 'Java'
+    register CoffeeLint, languages: 'CoffeeScript'
+    register CPPCheck, languages: 'C++'
+    register CSSLint, languages: 'CSS', parser: 'CSSLint'
+    register GoLint, languages: 'Go', parser: 'VimQuickfix'
+    register JSHint, languages: 'JavaScript'
+    register JSONLint, languages: 'JSON'
+    register PyLint, languages: 'Python'
+    register RuboCop, languages: 'Ruby'
+    register SCSSLint, languages: 'SCSS'
+    default Unknown
   end
 end

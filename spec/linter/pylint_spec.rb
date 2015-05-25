@@ -4,7 +4,7 @@ describe LintTrap::Linter::PyLint do
   let(:container){LintTrap::Container::Fake.new}
   let(:options){{}}
   let(:files){%w(good.py bad.py)}
-  subject(:linter){described_class.new}
+  subject(:linter){LintTrap::Linter.find('PyLint')}
   let(:command){instance_double(LintTrap::Command)}
 
   it_behaves_like 'linter'

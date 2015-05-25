@@ -3,7 +3,7 @@ require 'spec_helper'
 describe LintTrap::Linter::CSSLint do
   let(:container){LintTrap::Container::Docker.new(linter.image_version, fixture_path, remove_container: ENV['CI'].nil?)}
   let(:options){{}}
-  subject(:linter){described_class.new}
+  subject(:linter){LintTrap::Linter.find('CSSLint')}
 
   describe '#version' do
     subject(:dockerfile){Dockerfile.new(linter.name)}

@@ -3,6 +3,7 @@ require_relative '../execution_error'
 
 module LintTrap
   module Container
+    # Interface for a container
     class Base
       ImagePullError = Class.new(ExecutionError)
 

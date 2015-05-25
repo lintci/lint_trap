@@ -4,22 +4,15 @@ module LintTrap
   module Linter
     # Encapsulates logic specific to scsslint command line tool.
     class Unknown < Base
-      attr_reader :name
-
-      def initialize(name = 'Unknown')
-        @name = name
+      def lint(_files, _container, _options)
       end
 
       def languages
-        super(Language::Unknown)
+        [Language::Unknown.new]
       end
 
       def version
         LintTrap::VERSION
-      end
-
-      def known?
-        false
       end
     end
   end

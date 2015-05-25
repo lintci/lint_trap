@@ -4,7 +4,7 @@ describe LintTrap::Linter::CoffeeLint do
   let(:container){LintTrap::Container::Fake.new}
   let(:options){{}}
   let(:files){%w(good.coffee bad.coffee)}
-  subject(:linter){described_class.new}
+  subject(:linter){LintTrap::Linter.find('CoffeeLint')}
   let(:command){instance_double(LintTrap::Command)}
 
   it_behaves_like 'linter'

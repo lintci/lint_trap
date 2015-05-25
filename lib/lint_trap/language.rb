@@ -1,5 +1,6 @@
 require 'linguist'
 
+require_relative 'registerable'
 require_relative 'language/coffeescript'
 require_relative 'language/cpp'
 require_relative 'language/css'
@@ -13,31 +14,16 @@ require_relative 'language/scss'
 require_relative 'language/unknown'
 
 module LintTrap
-  # Language lookup
+  # Language registry
   module Language
-    @languages = {}
+    extend Registerable
 
     class << self
-      def register(language_class)
-        language = language_class.new
-        languages[language.name] = language
-      end
-
       def detect(file)
-        if (language = Linguist::FileBlob.new(file).language)
-          find(language.name)
-        else
-          Unknown.new
-        end
+        language = Linguist::FileBlob.new(file).language
+
+        find(language && language.name)
       end
-
-      def find(name)
-        languages[name] || Unknown.new(name)
-      end
-
-    protected
-
-      attr_reader :languages
     end
 
     register CoffeeScript
@@ -50,5 +36,6 @@ module LintTrap
     register Python
     register Ruby
     register SCSS
+    default Unknown
   end
 end

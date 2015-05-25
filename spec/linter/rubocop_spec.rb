@@ -4,7 +4,7 @@ describe LintTrap::Linter::RuboCop do
   let(:container){LintTrap::Container::Fake.new}
   let(:options){{}}
   let(:files){%w(good.rb bad.rb)}
-  subject(:linter){described_class.new}
+  subject(:linter){LintTrap::Linter.find('RuboCop')}
   let(:command){instance_double(LintTrap::Command)}
 
   it_behaves_like 'linter'

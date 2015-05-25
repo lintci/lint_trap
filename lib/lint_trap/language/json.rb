@@ -5,9 +5,6 @@ module LintTrap
   module Language
     # JSON
     class JSON < Base
-      def linters
-        super(Linter::JSONLint)
-      end
     end
   end
 end

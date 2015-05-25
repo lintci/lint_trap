@@ -9,6 +9,7 @@ describe LintTrap::Linter::Unknown do
 
   it_behaves_like 'linter'
 
+  its(:name){is_expected.to eq('Unknown')}
   its(:languages){is_expected.to eq([LintTrap::Language::Unknown.new])}
   its(:version){is_expected.to eq(LintTrap::VERSION)}
   its(:image){is_expected.to eq('lintci/unknown')}

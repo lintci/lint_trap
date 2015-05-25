@@ -5,9 +5,6 @@ module LintTrap
   module Language
     # SCSS
     class SCSS < Base
-      def linters
-        super(Linter::SCSSLint)
-      end
     end
   end
 end

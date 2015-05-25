@@ -4,7 +4,7 @@ describe LintTrap::Linter::JSHint do
   let(:container){LintTrap::Container::Fake.new}
   let(:options){{}}
   let(:files){%w(good.js bad.js)}
-  subject(:linter){described_class.new}
+  subject(:linter){LintTrap::Linter.find('JSHint')}
   let(:command){instance_double(LintTrap::Command)}
 
   it_behaves_like 'linter'

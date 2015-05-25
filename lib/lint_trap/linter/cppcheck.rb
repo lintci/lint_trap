@@ -4,10 +4,6 @@ module LintTrap
   module Linter
     # Encapsulates logic specific to cppcheck command line tool.
     class CPPCheck < Base
-      def languages
-        super(Language::CPP)
-      end
-
       def version
         '1.67-1'
       end

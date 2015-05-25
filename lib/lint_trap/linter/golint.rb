@@ -5,10 +5,6 @@ module LintTrap
   module Linter
     # Encapsulates logic specific to golint command line tool.
     class GoLint < Base
-      def languages
-        super(Language::Go)
-      end
-
       def version
         LintTrap::VERSION
       end
@@ -17,10 +13,6 @@ module LintTrap
 
       def flags(_container, _options)
         []
-      end
-
-      def parser(stdout, container)
-        LintTrap::Parser::VimQuickfix.new(stdout, container)
       end
     end
   end

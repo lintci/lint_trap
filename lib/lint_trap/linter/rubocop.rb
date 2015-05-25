@@ -6,10 +6,6 @@ module LintTrap
     class RuboCop < Base
       FORMATTER = 'rubocop/formatter.rb'
 
-      def languages
-        super(Language::Ruby)
-      end
-
       def version
         '0.31.0'
       end

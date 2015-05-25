@@ -21,6 +21,7 @@ task :credentials do
 end
 
 namespace :docker do
+  # Common tasks performed with docker
   class Docker
     DOCKER_CACHE_PATH = File.expand_path('~/.docker')
     DOCKER_IMAGE_PATH = File.join(DOCKER_CACHE_PATH, 'image.tar')
@@ -91,7 +92,7 @@ namespace :docker do
     end
 
     def sha
-      sha = ENV['CIRCLE_SHA1'] ? ENV['CIRCLE_SHA1'] : `git rev-parse HEAD`.strip
+      ENV['CIRCLE_SHA1'] ? ENV['CIRCLE_SHA1'] : `git rev-parse HEAD`.strip
     end
   end
 

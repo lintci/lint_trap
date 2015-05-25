@@ -13,6 +13,10 @@ describe LintTrap::Linter::Base do
       def flags(_container, _options)
         []
       end
+
+      def parser
+        LintTrap::Parser.find('Standard')
+      end
     end.new
   end
 
@@ -22,7 +26,7 @@ describe LintTrap::Linter::Base do
 
       it 'raises an error with console output' do
         expect{|b| linter.lint([file], container, options, &b)}.to raise_error(
-          LintTrap::Linter::LintError,
+          described_class::LintError,
           start_with(
             'An error occurred while running `docker run'
           )

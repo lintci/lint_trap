@@ -4,7 +4,7 @@ describe LintTrap::Linter::JSONLint do
   let(:container){LintTrap::Container::Fake.new}
   let(:options){{}}
   let(:files){%w(good.go bad.go)}
-  subject(:linter){described_class.new}
+  subject(:linter){LintTrap::Linter.find('JSONLint')}
   let(:command){instance_double(LintTrap::Command)}
 
   it_behaves_like 'linter'

@@ -3,7 +3,7 @@ require 'spec_helper'
 describe LintTrap::Linter::CheckStyle do
   let(:container){LintTrap::Container::Docker.new(linter.image_version, fixture_path, remove_container: ENV['CI'].nil?)}
   let(:options){{}}
-  subject(:linter){described_class.new}
+  subject(:linter){LintTrap::Linter.find('CheckStyle')}
 
   describe '#lint' do
     context 'when linting a bad file' do

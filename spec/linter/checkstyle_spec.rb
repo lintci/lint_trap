@@ -5,7 +5,7 @@ describe LintTrap::Linter::CheckStyle do
   let(:options){{}}
   let(:files){%w(Good.java bad.java)}
   let(:command){instance_double(LintTrap::Command)}
-  subject(:linter){described_class.new}
+  subject(:linter){LintTrap::Linter.find('CheckStyle')}
 
   it_behaves_like 'linter'
 

@@ -3,7 +3,7 @@ require 'spec_helper'
 describe LintTrap::Linter::JSONLint do
   let(:container){LintTrap::Container::Docker.new(linter.image_version, fixture_path, remove_container: ENV['CI'].nil?)}
   let(:options){{}}
-  subject(:linter){described_class.new}
+  subject(:linter){LintTrap::Linter.find('JSONLint')}
 
   describe '#version' do
     subject(:dockerfile){Dockerfile.new(linter.name)}

@@ -1,6 +1,25 @@
 require 'spec_helper'
 
 describe LintTrap::Language do
+  describe '.all' do
+    subject(:languages){described_class.all}
+
+    it do
+      is_expected.to match([
+        be_a(described_class::CoffeeScript),
+        be_a(described_class::CPP),
+        be_a(described_class::CSS),
+        be_a(described_class::Go),
+        be_a(described_class::Java),
+        be_a(described_class::JavaScript),
+        be_a(described_class::JSON),
+        be_a(described_class::Python),
+        be_a(described_class::Ruby),
+        be_a(described_class::SCSS)
+      ])
+    end
+  end
+
   describe '.detect' do
     subject(:language){described_class.detect(file)}
 
@@ -67,7 +86,7 @@ describe LintTrap::Language do
     context 'when given an unknown language file' do
       let(:file){fixture_path('lint.txt')}
 
-      it{is_expected.to eq(described_class::Unknown.new('Text'))}
+      it{is_expected.to eq(described_class::Unknown.new)}
     end
 
     context 'when given a known language file that is empty' do
@@ -144,7 +163,7 @@ describe LintTrap::Language do
     context 'when given an invalid language' do
       let(:language_name){'invalid language'}
 
-      it{is_expected.to eq(described_class::Unknown.new(language_name))}
+      it{is_expected.to eq(described_class::Unknown.new)}
     end
   end
 end

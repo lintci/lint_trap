@@ -6,10 +6,6 @@ module LintTrap
     class CoffeeLint < Base
       REPORTER = 'coffeelint/lint_trap.coffee'
 
-      def languages
-        super(Language::CoffeeScript)
-      end
-
       def version
         '1.9.7'
       end

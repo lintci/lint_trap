@@ -5,9 +5,6 @@ module LintTrap
   module Language
     # Java
     class Java < Base
-      def linters
-        super(Linter::CheckStyle)
-      end
     end
   end
 end

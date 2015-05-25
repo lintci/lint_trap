@@ -86,7 +86,7 @@ describe LintTrap::Linter do
     context 'when given an unknown linter' do
       let(:linter_name){'taco cheese'}
 
-      it{is_expected.to eq(described_class::Unknown.new(linter_name))}
+      it{is_expected.to eq(described_class::Unknown.new)}
     end
   end
 end

@@ -6,10 +6,6 @@ module LintTrap
     class SCSSLint < Base
       COMMAND = 'scsslint/scsslint'
 
-      def languages
-        super(Language::SCSS)
-      end
-
       def version
         '0.38.0'
       end
