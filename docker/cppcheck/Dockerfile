@@ -1,4 +1,4 @@
-FROM debian:jessie
+FROM buildpack-deps:jessie-scm
 MAINTAINER LintCI
 
 ### Setup User ###
