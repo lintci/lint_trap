@@ -17,6 +17,7 @@ ENV PYLINT_VERSION 1.3.1-3
 RUN apt-get update \
  && apt-get install -y \
     pylint=$PYLINT_VERSION \
+ && apt-get install -y git \
  && rm -rf /var/lib/apt/lists/*
 
 ### Defaults ###

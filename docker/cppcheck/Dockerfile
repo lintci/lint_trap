@@ -17,6 +17,7 @@ ENV CPPCHECK_VERSION 1.67-1
 RUN apt-get update \
  && apt-get install -y \
     cppcheck=$CPPCHECK_VERSION \
+ && apt-get install -y git \
  && rm -rf /var/lib/apt/lists/*
 
 ### Defaults ###
