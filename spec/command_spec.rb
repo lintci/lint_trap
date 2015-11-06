@@ -10,7 +10,7 @@ describe LintTrap::Command do
 
     it 'generates the expected output' do
       success = command.run(container) do |io|
-        expect(io.read).to eq("     1\tlint\n")
+        expect(io.read).to include("     1\tlint\n")
       end
 
       expect(success).to be_truthy

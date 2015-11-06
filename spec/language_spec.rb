@@ -89,6 +89,12 @@ describe LintTrap::Language do
       it{is_expected.to eq(described_class::Unknown.new)}
     end
 
+    context 'when given an image' do
+      let(:file){fixture_path('good.png')}
+
+      it{is_expected.to eq(described_class::Unknown.new)}
+    end
+
     context 'when given a known language file that is empty' do
       let(:file){fixture_path('empty.rb')}
 
